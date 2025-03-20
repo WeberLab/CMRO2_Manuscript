@@ -1,0 +1,3549 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-99.9.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Anna Zhu">
+<meta name="dcterms.date" content="2024-10-04">
+
+<title>NatalieCNN</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="CMRO2_Analysis_files/libs/clipboard/clipboard.min.js"></script>
+<script src="CMRO2_Analysis_files/libs/quarto-html/quarto.js"></script>
+<script src="CMRO2_Analysis_files/libs/quarto-html/popper.min.js"></script>
+<script src="CMRO2_Analysis_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="CMRO2_Analysis_files/libs/quarto-html/anchor.min.js"></script>
+<link href="CMRO2_Analysis_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="CMRO2_Analysis_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="CMRO2_Analysis_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="CMRO2_Analysis_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="CMRO2_Analysis_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">NatalieCNN</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Anna Zhu </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 4, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="read-data" class="level1">
+<h1>Read Data</h1>
+</section>
+<section id="hct-calculation" class="level1">
+<h1>Hct Calculation</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-8.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-9.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-10.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-11.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-12.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-13.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-14.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-15.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-16.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-17.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-18.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-5-19.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="initial-stats" class="level1">
+<h1>Initial Stats</h1>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">vars</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">median</th>
+<th style="text-align: right;">trimmed</th>
+<th style="text-align: right;">mad</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">range</th>
+<th style="text-align: right;">skew</th>
+<th style="text-align: right;">kurtosis</th>
+<th style="text-align: right;">se</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Subject</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.000000e+01</td>
+<td style="text-align: right;">5.627314e+00</td>
+<td style="text-align: right;">1.000000e+01</td>
+<td style="text-align: right;">1.000000e+01</td>
+<td style="text-align: right;">7.413000e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">1.900000e+01</td>
+<td style="text-align: right;">1.800000e+01</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">-1.3904709</td>
+<td style="text-align: right;">1.2909944</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.526316e+00</td>
+<td style="text-align: right;">5.129892e-01</td>
+<td style="text-align: right;">2.000000e+00</td>
+<td style="text-align: right;">1.529412e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">2.000000e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">-0.0971979</td>
+<td style="text-align: right;">-2.0925208</td>
+<td style="text-align: right;">0.1176878</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BW</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.276053e+03</td>
+<td style="text-align: right;">2.948707e+02</td>
+<td style="text-align: right;">1.304000e+03</td>
+<td style="text-align: right;">1.279235e+03</td>
+<td style="text-align: right;">3.439632e+02</td>
+<td style="text-align: right;">7.740000e+02</td>
+<td style="text-align: right;">1.724000e+03</td>
+<td style="text-align: right;">9.500000e+02</td>
+<td style="text-align: right;">-0.0230148</td>
+<td style="text-align: right;">-1.2077940</td>
+<td style="text-align: right;">67.6479740</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GA at birth (week)</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.847368e+01</td>
+<td style="text-align: right;">1.678902e+00</td>
+<td style="text-align: right;">2.800000e+01</td>
+<td style="text-align: right;">2.852941e+01</td>
+<td style="text-align: right;">1.482600e+00</td>
+<td style="text-align: right;">2.500000e+01</td>
+<td style="text-align: right;">3.100000e+01</td>
+<td style="text-align: right;">6.000000e+00</td>
+<td style="text-align: right;">-0.1236631</td>
+<td style="text-align: right;">-0.8086173</td>
+<td style="text-align: right;">0.3851666</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GA at Birth (day)</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.263158e+00</td>
+<td style="text-align: right;">2.104020e+00</td>
+<td style="text-align: right;">2.000000e+00</td>
+<td style="text-align: right;">2.176471e+00</td>
+<td style="text-align: right;">2.965200e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">6.000000e+00</td>
+<td style="text-align: right;">6.000000e+00</td>
+<td style="text-align: right;">0.5184178</td>
+<td style="text-align: right;">-0.9717412</td>
+<td style="text-align: right;">0.4826953</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DOB</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">6.789474e+00</td>
+<td style="text-align: right;">4.184348e+00</td>
+<td style="text-align: right;">7.000000e+00</td>
+<td style="text-align: right;">6.705882e+00</td>
+<td style="text-align: right;">4.447800e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">1.400000e+01</td>
+<td style="text-align: right;">1.300000e+01</td>
+<td style="text-align: right;">0.0928341</td>
+<td style="text-align: right;">-1.3406587</td>
+<td style="text-align: right;">0.9599554</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MRI Scan Date</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">7.105263e+00</td>
+<td style="text-align: right;">3.970653e+00</td>
+<td style="text-align: right;">7.000000e+00</td>
+<td style="text-align: right;">7.117647e+00</td>
+<td style="text-align: right;">4.447800e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">1.300000e+01</td>
+<td style="text-align: right;">1.200000e+01</td>
+<td style="text-align: right;">0.0221619</td>
+<td style="text-align: right;">-1.3581767</td>
+<td style="text-align: right;">0.9109302</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CGA on Scan Day (Week)</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">4.000000e+01</td>
+<td style="text-align: right;">1.414214e+00</td>
+<td style="text-align: right;">4.000000e+01</td>
+<td style="text-align: right;">3.994118e+01</td>
+<td style="text-align: right;">1.482600e+00</td>
+<td style="text-align: right;">3.700000e+01</td>
+<td style="text-align: right;">4.400000e+01</td>
+<td style="text-align: right;">7.000000e+00</td>
+<td style="text-align: right;">0.6698906</td>
+<td style="text-align: right;">1.5789474</td>
+<td style="text-align: right;">0.3244428</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CGA on Scan Day (Day)</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.526316e+00</td>
+<td style="text-align: right;">1.611363e+00</td>
+<td style="text-align: right;">3.000000e+00</td>
+<td style="text-align: right;">2.529412e+00</td>
+<td style="text-align: right;">1.482600e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">5.000000e+00</td>
+<td style="text-align: right;">5.000000e+00</td>
+<td style="text-align: right;">-0.1580636</td>
+<td style="text-align: right;">-1.2253915</td>
+<td style="text-align: right;">0.3696721</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Weight on Scan Day (kg)</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">3.396579e+00</td>
+<td style="text-align: right;">5.977157e-01</td>
+<td style="text-align: right;">3.330000e+00</td>
+<td style="text-align: right;">3.408235e+00</td>
+<td style="text-align: right;">6.745830e-01</td>
+<td style="text-align: right;">2.290000e+00</td>
+<td style="text-align: right;">4.305000e+00</td>
+<td style="text-align: right;">2.015000e+00</td>
+<td style="text-align: right;">-0.1343141</td>
+<td style="text-align: right;">-1.2438874</td>
+<td style="text-align: right;">0.1371254</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Length on Scan Day (cm)</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">4.922368e+01</td>
+<td style="text-align: right;">2.930793e+00</td>
+<td style="text-align: right;">5.000000e+01</td>
+<td style="text-align: right;">4.939706e+01</td>
+<td style="text-align: right;">2.223900e+00</td>
+<td style="text-align: right;">4.250000e+01</td>
+<td style="text-align: right;">5.300000e+01</td>
+<td style="text-align: right;">1.050000e+01</td>
+<td style="text-align: right;">-0.9032065</td>
+<td style="text-align: right;">-0.0493731</td>
+<td style="text-align: right;">0.6723700</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Head Cir. on Scan Day (cm)</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">3.513158e+01</td>
+<td style="text-align: right;">1.323842e+00</td>
+<td style="text-align: right;">3.550000e+01</td>
+<td style="text-align: right;">3.511765e+01</td>
+<td style="text-align: right;">1.482600e+00</td>
+<td style="text-align: right;">3.300000e+01</td>
+<td style="text-align: right;">3.750000e+01</td>
+<td style="text-align: right;">4.500000e+00</td>
+<td style="text-align: right;">-0.1714567</td>
+<td style="text-align: right;">-1.2872346</td>
+<td style="text-align: right;">0.3037103</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CSaO2</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">9.827895e-01</td>
+<td style="text-align: right;">1.537160e-02</td>
+<td style="text-align: right;">9.890000e-01</td>
+<td style="text-align: right;">9.845882e-01</td>
+<td style="text-align: right;">1.186080e-02</td>
+<td style="text-align: right;">9.360000e-01</td>
+<td style="text-align: right;">9.990000e-01</td>
+<td style="text-align: right;">6.300000e-02</td>
+<td style="text-align: right;">-1.4032691</td>
+<td style="text-align: right;">1.8760110</td>
+<td style="text-align: right;">0.0035265</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PMA</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">4.036090e+01</td>
+<td style="text-align: right;">1.404858e+00</td>
+<td style="text-align: right;">4.057143e+01</td>
+<td style="text-align: right;">4.031933e+01</td>
+<td style="text-align: right;">1.270800e+00</td>
+<td style="text-align: right;">3.742857e+01</td>
+<td style="text-align: right;">4.400000e+01</td>
+<td style="text-align: right;">6.571429e+00</td>
+<td style="text-align: right;">0.4184248</td>
+<td style="text-align: right;">0.5962444</td>
+<td style="text-align: right;">0.3222964</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GA</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.879699e+01</td>
+<td style="text-align: right;">1.675701e+00</td>
+<td style="text-align: right;">2.885714e+01</td>
+<td style="text-align: right;">2.889076e+01</td>
+<td style="text-align: right;">2.118000e+00</td>
+<td style="text-align: right;">2.500000e+01</td>
+<td style="text-align: right;">3.100000e+01</td>
+<td style="text-align: right;">6.000000e+00</td>
+<td style="text-align: right;">-0.5063238</td>
+<td style="text-align: right;">-0.6399187</td>
+<td style="text-align: right;">0.3844321</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hct</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.965435e-01</td>
+<td style="text-align: right;">3.493560e-02</td>
+<td style="text-align: right;">2.903233e-01</td>
+<td style="text-align: right;">2.948980e-01</td>
+<td style="text-align: right;">2.206850e-02</td>
+<td style="text-align: right;">2.412795e-01</td>
+<td style="text-align: right;">3.797808e-01</td>
+<td style="text-align: right;">1.385013e-01</td>
+<td style="text-align: right;">0.5630232</td>
+<td style="text-align: right;">-0.0599734</td>
+<td style="text-align: right;">0.0080148</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CSF_Volume</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.024565e+05</td>
+<td style="text-align: right;">1.690180e+04</td>
+<td style="text-align: right;">9.876265e+04</td>
+<td style="text-align: right;">1.016667e+05</td>
+<td style="text-align: right;">1.782804e+04</td>
+<td style="text-align: right;">8.029043e+04</td>
+<td style="text-align: right;">1.380505e+05</td>
+<td style="text-align: right;">5.776009e+04</td>
+<td style="text-align: right;">0.5803560</td>
+<td style="text-align: right;">-0.8806700</td>
+<td style="text-align: right;">3877.5397957</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GM_Volume</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.406289e+05</td>
+<td style="text-align: right;">2.083372e+04</td>
+<td style="text-align: right;">1.410776e+05</td>
+<td style="text-align: right;">1.406767e+05</td>
+<td style="text-align: right;">2.208167e+04</td>
+<td style="text-align: right;">9.845987e+04</td>
+<td style="text-align: right;">1.819856e+05</td>
+<td style="text-align: right;">8.352571e+04</td>
+<td style="text-align: right;">-0.0406308</td>
+<td style="text-align: right;">-0.5357694</td>
+<td style="text-align: right;">4779.5822419</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WM_Volume</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.582211e+05</td>
+<td style="text-align: right;">1.433010e+04</td>
+<td style="text-align: right;">1.576880e+05</td>
+<td style="text-align: right;">1.585026e+05</td>
+<td style="text-align: right;">1.440434e+04</td>
+<td style="text-align: right;">1.275475e+05</td>
+<td style="text-align: right;">1.841099e+05</td>
+<td style="text-align: right;">5.656241e+04</td>
+<td style="text-align: right;">-0.1810337</td>
+<td style="text-align: right;">-0.7242151</td>
+<td style="text-align: right;">3287.5497194</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bg_Volume</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.544704e+05</td>
+<td style="text-align: right;">2.187562e+04</td>
+<td style="text-align: right;">1.515221e+05</td>
+<td style="text-align: right;">1.531829e+05</td>
+<td style="text-align: right;">1.222960e+04</td>
+<td style="text-align: right;">1.263685e+05</td>
+<td style="text-align: right;">2.044604e+05</td>
+<td style="text-align: right;">7.809183e+04</td>
+<td style="text-align: right;">0.7999608</td>
+<td style="text-align: right;">-0.1350893</td>
+<td style="text-align: right;">5018.6123919</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ventricle_Volume</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">7.974358e+03</td>
+<td style="text-align: right;">2.572231e+03</td>
+<td style="text-align: right;">7.446632e+03</td>
+<td style="text-align: right;">7.624511e+03</td>
+<td style="text-align: right;">1.470662e+03</td>
+<td style="text-align: right;">5.773444e+03</td>
+<td style="text-align: right;">1.612267e+04</td>
+<td style="text-align: right;">1.034922e+04</td>
+<td style="text-align: right;">1.9287633</td>
+<td style="text-align: right;">3.1667780</td>
+<td style="text-align: right;">590.1103152</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cerebellum_Volume</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.504058e+04</td>
+<td style="text-align: right;">3.943031e+03</td>
+<td style="text-align: right;">2.441780e+04</td>
+<td style="text-align: right;">2.489130e+04</td>
+<td style="text-align: right;">3.885263e+03</td>
+<td style="text-align: right;">1.724647e+04</td>
+<td style="text-align: right;">3.537257e+04</td>
+<td style="text-align: right;">1.812610e+04</td>
+<td style="text-align: right;">0.5536431</td>
+<td style="text-align: right;">0.5817544</td>
+<td style="text-align: right;">904.5933728</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Deep_GM_Volume</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.689108e+04</td>
+<td style="text-align: right;">2.763229e+03</td>
+<td style="text-align: right;">2.631196e+04</td>
+<td style="text-align: right;">2.689698e+04</td>
+<td style="text-align: right;">2.708736e+03</td>
+<td style="text-align: right;">2.170566e+04</td>
+<td style="text-align: right;">3.197614e+04</td>
+<td style="text-align: right;">1.027048e+04</td>
+<td style="text-align: right;">0.1403784</td>
+<td style="text-align: right;">-1.0113430</td>
+<td style="text-align: right;">633.9281144</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Brain_Stem_Volume</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">5.902329e+03</td>
+<td style="text-align: right;">4.529662e+02</td>
+<td style="text-align: right;">5.780770e+03</td>
+<td style="text-align: right;">5.879107e+03</td>
+<td style="text-align: right;">3.294282e+02</td>
+<td style="text-align: right;">5.189874e+03</td>
+<td style="text-align: right;">7.009564e+03</td>
+<td style="text-align: right;">1.819691e+03</td>
+<td style="text-align: right;">0.7499498</td>
+<td style="text-align: right;">-0.1176460</td>
+<td style="text-align: right;">103.9175671</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hip_and_Amyg_Volume</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.537384e+03</td>
+<td style="text-align: right;">2.274147e+02</td>
+<td style="text-align: right;">2.493605e+03</td>
+<td style="text-align: right;">2.533629e+03</td>
+<td style="text-align: right;">2.841771e+02</td>
+<td style="text-align: right;">2.163973e+03</td>
+<td style="text-align: right;">2.974624e+03</td>
+<td style="text-align: right;">8.106506e+02</td>
+<td style="text-align: right;">0.1719723</td>
+<td style="text-align: right;">-0.8866616</td>
+<td style="text-align: right;">52.1725112</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CSF_Chi</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">5.088800e-03</td>
+<td style="text-align: right;">1.276400e-03</td>
+<td style="text-align: right;">5.343000e-03</td>
+<td style="text-align: right;">5.135100e-03</td>
+<td style="text-align: right;">1.666400e-03</td>
+<td style="text-align: right;">2.504000e-03</td>
+<td style="text-align: right;">6.887000e-03</td>
+<td style="text-align: right;">4.383000e-03</td>
+<td style="text-align: right;">-0.2368056</td>
+<td style="text-align: right;">-1.1189033</td>
+<td style="text-align: right;">0.0002928</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GM_Chi</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">-2.872800e-03</td>
+<td style="text-align: right;">6.320000e-04</td>
+<td style="text-align: right;">-2.778000e-03</td>
+<td style="text-align: right;">-2.885800e-03</td>
+<td style="text-align: right;">5.723000e-04</td>
+<td style="text-align: right;">-3.920000e-03</td>
+<td style="text-align: right;">-1.604000e-03</td>
+<td style="text-align: right;">2.316000e-03</td>
+<td style="text-align: right;">0.2265719</td>
+<td style="text-align: right;">-0.8387504</td>
+<td style="text-align: right;">0.0001450</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WM_Chi</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">-7.397000e-04</td>
+<td style="text-align: right;">7.034000e-04</td>
+<td style="text-align: right;">-6.630000e-04</td>
+<td style="text-align: right;">-6.928000e-04</td>
+<td style="text-align: right;">8.584000e-04</td>
+<td style="text-align: right;">-2.503000e-03</td>
+<td style="text-align: right;">2.250000e-04</td>
+<td style="text-align: right;">2.728000e-03</td>
+<td style="text-align: right;">-0.6792824</td>
+<td style="text-align: right;">-0.2316505</td>
+<td style="text-align: right;">0.0001614</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BG_Chi</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">6.034500e-03</td>
+<td style="text-align: right;">9.791600e-03</td>
+<td style="text-align: right;">4.267000e-03</td>
+<td style="text-align: right;">5.844200e-03</td>
+<td style="text-align: right;">9.270700e-03</td>
+<td style="text-align: right;">-8.214000e-03</td>
+<td style="text-align: right;">2.351800e-02</td>
+<td style="text-align: right;">3.173200e-02</td>
+<td style="text-align: right;">0.4256495</td>
+<td style="text-align: right;">-1.2146710</td>
+<td style="text-align: right;">0.0022464</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ventricle_Chi</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.179410e-02</td>
+<td style="text-align: right;">4.332200e-03</td>
+<td style="text-align: right;">1.147400e-02</td>
+<td style="text-align: right;">1.162570e-02</td>
+<td style="text-align: right;">5.393700e-03</td>
+<td style="text-align: right;">6.080000e-03</td>
+<td style="text-align: right;">2.037000e-02</td>
+<td style="text-align: right;">1.429000e-02</td>
+<td style="text-align: right;">0.3862581</td>
+<td style="text-align: right;">-1.1825447</td>
+<td style="text-align: right;">0.0009939</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cerebellum_Chi</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">-2.535600e-03</td>
+<td style="text-align: right;">1.706900e-03</td>
+<td style="text-align: right;">-2.399000e-03</td>
+<td style="text-align: right;">-2.505000e-03</td>
+<td style="text-align: right;">1.117900e-03</td>
+<td style="text-align: right;">-6.259000e-03</td>
+<td style="text-align: right;">6.680000e-04</td>
+<td style="text-align: right;">6.927000e-03</td>
+<td style="text-align: right;">-0.0717802</td>
+<td style="text-align: right;">-0.3106321</td>
+<td style="text-align: right;">0.0003916</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Deep_GM_Chi</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">-7.642400e-03</td>
+<td style="text-align: right;">1.685600e-03</td>
+<td style="text-align: right;">-7.206000e-03</td>
+<td style="text-align: right;">-7.527100e-03</td>
+<td style="text-align: right;">1.286900e-03</td>
+<td style="text-align: right;">-1.207600e-02</td>
+<td style="text-align: right;">-5.169000e-03</td>
+<td style="text-align: right;">6.907000e-03</td>
+<td style="text-align: right;">-0.9370980</td>
+<td style="text-align: right;">0.4339365</td>
+<td style="text-align: right;">0.0003867</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Brain_Stem_Chi</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">-7.911900e-03</td>
+<td style="text-align: right;">3.580900e-03</td>
+<td style="text-align: right;">-8.667000e-03</td>
+<td style="text-align: right;">-7.941800e-03</td>
+<td style="text-align: right;">3.266200e-03</td>
+<td style="text-align: right;">-1.441300e-02</td>
+<td style="text-align: right;">-9.030000e-04</td>
+<td style="text-align: right;">1.351000e-02</td>
+<td style="text-align: right;">0.4514329</td>
+<td style="text-align: right;">-0.5894009</td>
+<td style="text-align: right;">0.0008215</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hip_and_Amyg_Chi</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.117800e-03</td>
+<td style="text-align: right;">5.399000e-03</td>
+<td style="text-align: right;">2.843000e-03</td>
+<td style="text-align: right;">2.782800e-03</td>
+<td style="text-align: right;">3.295800e-03</td>
+<td style="text-align: right;">-1.708600e-02</td>
+<td style="text-align: right;">1.001700e-02</td>
+<td style="text-align: right;">2.710300e-02</td>
+<td style="text-align: right;">-2.1457929</td>
+<td style="text-align: right;">5.7492150</td>
+<td style="text-align: right;">0.0012386</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Avg_Chi_Vein_p15thr</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.271406e-01</td>
+<td style="text-align: right;">2.452720e-02</td>
+<td style="text-align: right;">2.262390e-01</td>
+<td style="text-align: right;">2.272608e-01</td>
+<td style="text-align: right;">1.900690e-02</td>
+<td style="text-align: right;">1.818270e-01</td>
+<td style="text-align: right;">2.704110e-01</td>
+<td style="text-align: right;">8.858400e-02</td>
+<td style="text-align: right;">-0.0839482</td>
+<td style="text-align: right;">-0.8122127</td>
+<td style="text-align: right;">0.0056269</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Avg_Chi_Vein_Segmen_p1thr</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.733378e-01</td>
+<td style="text-align: right;">2.282030e-02</td>
+<td style="text-align: right;">1.727670e-01</td>
+<td style="text-align: right;">1.727234e-01</td>
+<td style="text-align: right;">1.728420e-02</td>
+<td style="text-align: right;">1.362880e-01</td>
+<td style="text-align: right;">2.208330e-01</td>
+<td style="text-align: right;">8.454500e-02</td>
+<td style="text-align: right;">0.1854517</td>
+<td style="text-align: right;">-0.7249725</td>
+<td style="text-align: right;">0.0052353</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CSF_CBF</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.200480e+01</td>
+<td style="text-align: right;">3.156527e+00</td>
+<td style="text-align: right;">1.239949e+01</td>
+<td style="text-align: right;">1.204934e+01</td>
+<td style="text-align: right;">3.023736e+00</td>
+<td style="text-align: right;">5.743607e+00</td>
+<td style="text-align: right;">1.750877e+01</td>
+<td style="text-align: right;">1.176516e+01</td>
+<td style="text-align: right;">-0.0816599</td>
+<td style="text-align: right;">-0.7344930</td>
+<td style="text-align: right;">0.7241570</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GM_CBF</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.430068e+01</td>
+<td style="text-align: right;">4.248092e+00</td>
+<td style="text-align: right;">1.540905e+01</td>
+<td style="text-align: right;">1.444368e+01</td>
+<td style="text-align: right;">4.707252e+00</td>
+<td style="text-align: right;">5.373244e+00</td>
+<td style="text-align: right;">2.079716e+01</td>
+<td style="text-align: right;">1.542392e+01</td>
+<td style="text-align: right;">-0.3225231</td>
+<td style="text-align: right;">-0.8148209</td>
+<td style="text-align: right;">0.9745790</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WM_CBF</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.118311e+01</td>
+<td style="text-align: right;">3.110537e+00</td>
+<td style="text-align: right;">1.133164e+01</td>
+<td style="text-align: right;">1.129104e+01</td>
+<td style="text-align: right;">3.378537e+00</td>
+<td style="text-align: right;">4.944177e+00</td>
+<td style="text-align: right;">1.558721e+01</td>
+<td style="text-align: right;">1.064303e+01</td>
+<td style="text-align: right;">-0.3823694</td>
+<td style="text-align: right;">-1.0942990</td>
+<td style="text-align: right;">0.7136063</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BG_CBF</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.408752e+01</td>
+<td style="text-align: right;">2.310920e+00</td>
+<td style="text-align: right;">1.472643e+01</td>
+<td style="text-align: right;">1.414138e+01</td>
+<td style="text-align: right;">1.960777e+00</td>
+<td style="text-align: right;">9.152971e+00</td>
+<td style="text-align: right;">1.810630e+01</td>
+<td style="text-align: right;">8.953331e+00</td>
+<td style="text-align: right;">-0.4085498</td>
+<td style="text-align: right;">-0.5702957</td>
+<td style="text-align: right;">0.5301615</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ventricle_CBF</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.009971e+01</td>
+<td style="text-align: right;">3.069492e+00</td>
+<td style="text-align: right;">9.584531e+00</td>
+<td style="text-align: right;">1.016550e+01</td>
+<td style="text-align: right;">3.353084e+00</td>
+<td style="text-align: right;">4.649106e+00</td>
+<td style="text-align: right;">1.443201e+01</td>
+<td style="text-align: right;">9.782899e+00</td>
+<td style="text-align: right;">-0.1724825</td>
+<td style="text-align: right;">-1.2701754</td>
+<td style="text-align: right;">0.7041898</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cerebellum_CBF</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.177752e+01</td>
+<td style="text-align: right;">8.273928e+00</td>
+<td style="text-align: right;">2.214367e+01</td>
+<td style="text-align: right;">2.185477e+01</td>
+<td style="text-align: right;">9.210684e+00</td>
+<td style="text-align: right;">7.297718e+00</td>
+<td style="text-align: right;">3.494411e+01</td>
+<td style="text-align: right;">2.764639e+01</td>
+<td style="text-align: right;">0.0697087</td>
+<td style="text-align: right;">-1.0787500</td>
+<td style="text-align: right;">1.8981692</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Deep_GM_CBF</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.810092e+01</td>
+<td style="text-align: right;">6.632392e+00</td>
+<td style="text-align: right;">1.730980e+01</td>
+<td style="text-align: right;">1.805073e+01</td>
+<td style="text-align: right;">6.612396e+00</td>
+<td style="text-align: right;">5.955298e+00</td>
+<td style="text-align: right;">3.109979e+01</td>
+<td style="text-align: right;">2.514449e+01</td>
+<td style="text-align: right;">0.2081908</td>
+<td style="text-align: right;">-0.8123814</td>
+<td style="text-align: right;">1.5215751</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Brain_Stem_CBF</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.715718e+01</td>
+<td style="text-align: right;">1.105268e+01</td>
+<td style="text-align: right;">2.696516e+01</td>
+<td style="text-align: right;">2.726638e+01</td>
+<td style="text-align: right;">1.006341e+01</td>
+<td style="text-align: right;">7.143075e+00</td>
+<td style="text-align: right;">4.531499e+01</td>
+<td style="text-align: right;">3.817191e+01</td>
+<td style="text-align: right;">0.1090950</td>
+<td style="text-align: right;">-0.9355707</td>
+<td style="text-align: right;">2.5356583</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hip_and_Amyg_CBF</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.998453e+01</td>
+<td style="text-align: right;">6.847789e+00</td>
+<td style="text-align: right;">2.042521e+01</td>
+<td style="text-align: right;">2.006934e+01</td>
+<td style="text-align: right;">7.722819e+00</td>
+<td style="text-align: right;">7.166507e+00</td>
+<td style="text-align: right;">3.136067e+01</td>
+<td style="text-align: right;">2.419417e+01</td>
+<td style="text-align: right;">-0.0358662</td>
+<td style="text-align: right;">-0.8563460</td>
+<td style="text-align: right;">1.5709906</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Invasive</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">4.947368e+00</td>
+<td style="text-align: right;">8.072406e+00</td>
+<td style="text-align: right;">2.000000e+00</td>
+<td style="text-align: right;">3.705882e+00</td>
+<td style="text-align: right;">2.965200e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">3.100000e+01</td>
+<td style="text-align: right;">3.100000e+01</td>
+<td style="text-align: right;">1.9514868</td>
+<td style="text-align: right;">3.1464048</td>
+<td style="text-align: right;">1.8519370</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Noninvasive</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.415789e+01</td>
+<td style="text-align: right;">1.590689e+01</td>
+<td style="text-align: right;">1.900000e+01</td>
+<td style="text-align: right;">2.335294e+01</td>
+<td style="text-align: right;">1.186080e+01</td>
+<td style="text-align: right;">6.000000e+00</td>
+<td style="text-align: right;">5.600000e+01</td>
+<td style="text-align: right;">5.000000e+01</td>
+<td style="text-align: right;">0.8014502</td>
+<td style="text-align: right;">-0.7232836</td>
+<td style="text-align: right;">3.6492915</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Less_Invasive</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">9.421053e+00</td>
+<td style="text-align: right;">8.146682e+00</td>
+<td style="text-align: right;">7.000000e+00</td>
+<td style="text-align: right;">9.058824e+00</td>
+<td style="text-align: right;">5.930400e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">2.500000e+01</td>
+<td style="text-align: right;">2.500000e+01</td>
+<td style="text-align: right;">0.7012165</td>
+<td style="text-align: right;">-0.7546060</td>
+<td style="text-align: right;">1.8689769</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Antibiotics</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">7.421053e+00</td>
+<td style="text-align: right;">8.153498e+00</td>
+<td style="text-align: right;">3.000000e+00</td>
+<td style="text-align: right;">6.705882e+00</td>
+<td style="text-align: right;">4.447800e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">2.700000e+01</td>
+<td style="text-align: right;">2.700000e+01</td>
+<td style="text-align: right;">1.3033636</td>
+<td style="text-align: right;">0.4388917</td>
+<td style="text-align: right;">1.8705408</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Breastmilk</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">3.689474e+01</td>
+<td style="text-align: right;">2.615742e+01</td>
+<td style="text-align: right;">3.800000e+01</td>
+<td style="text-align: right;">3.529412e+01</td>
+<td style="text-align: right;">2.520420e+01</td>
+<td style="text-align: right;">2.000000e+00</td>
+<td style="text-align: right;">9.900000e+01</td>
+<td style="text-align: right;">9.700000e+01</td>
+<td style="text-align: right;">0.5461878</td>
+<td style="text-align: right;">-0.3723338</td>
+<td style="text-align: right;">6.0009233</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CPAP</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.594737e+01</td>
+<td style="text-align: right;">9.436770e+00</td>
+<td style="text-align: right;">1.300000e+01</td>
+<td style="text-align: right;">1.505882e+01</td>
+<td style="text-align: right;">7.413000e+00</td>
+<td style="text-align: right;">6.000000e+00</td>
+<td style="text-align: right;">4.100000e+01</td>
+<td style="text-align: right;">3.500000e+01</td>
+<td style="text-align: right;">1.2795190</td>
+<td style="text-align: right;">0.9218807</td>
+<td style="text-align: right;">2.1649436</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Donormilk</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.305263e+01</td>
+<td style="text-align: right;">1.313804e+01</td>
+<td style="text-align: right;">5.000000e+00</td>
+<td style="text-align: right;">1.235294e+01</td>
+<td style="text-align: right;">7.413000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">3.800000e+01</td>
+<td style="text-align: right;">3.800000e+01</td>
+<td style="text-align: right;">0.5757295</td>
+<td style="text-align: right;">-1.3711631</td>
+<td style="text-align: right;">3.0140739</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Formula</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">4.894737e+00</td>
+<td style="text-align: right;">1.152724e+01</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">2.823529e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">4.500000e+01</td>
+<td style="text-align: right;">4.500000e+01</td>
+<td style="text-align: right;">2.3646590</td>
+<td style="text-align: right;">5.0183019</td>
+<td style="text-align: right;">2.6445295</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HFJV</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.210526e+00</td>
+<td style="text-align: right;">3.923985e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">4.117647e-01</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">1.600000e+01</td>
+<td style="text-align: right;">1.600000e+01</td>
+<td style="text-align: right;">2.9606480</td>
+<td style="text-align: right;">7.8780707</td>
+<td style="text-align: right;">0.9002240</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HFOV</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">6.315789e-01</td>
+<td style="text-align: right;">2.752989e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">1.200000e+01</td>
+<td style="text-align: right;">1.200000e+01</td>
+<td style="text-align: right;">3.6948008</td>
+<td style="text-align: right;">12.3074792</td>
+<td style="text-align: right;">0.6315789</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Highflow</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">9.105263e+00</td>
+<td style="text-align: right;">8.279122e+00</td>
+<td style="text-align: right;">7.000000e+00</td>
+<td style="text-align: right;">8.705882e+00</td>
+<td style="text-align: right;">5.930400e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">2.500000e+01</td>
+<td style="text-align: right;">2.500000e+01</td>
+<td style="text-align: right;">0.7520152</td>
+<td style="text-align: right;">-0.7693657</td>
+<td style="text-align: right;">1.8993608</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Inotropes</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">7.894737e-01</td>
+<td style="text-align: right;">2.200478e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">3.529412e-01</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">9.000000e+00</td>
+<td style="text-align: right;">9.000000e+00</td>
+<td style="text-align: right;">2.8018827</td>
+<td style="text-align: right;">7.3226021</td>
+<td style="text-align: right;">0.5048244</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IPPV</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">3.105263e+00</td>
+<td style="text-align: right;">6.943380e+00</td>
+<td style="text-align: right;">2.000000e+00</td>
+<td style="text-align: right;">1.647059e+00</td>
+<td style="text-align: right;">2.965200e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">3.100000e+01</td>
+<td style="text-align: right;">3.100000e+01</td>
+<td style="text-align: right;">3.3741320</td>
+<td style="text-align: right;">10.7281472</td>
+<td style="text-align: right;">1.5929206</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">JET</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">3.684211e-01</td>
+<td style="text-align: right;">1.605910e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">7.000000e+00</td>
+<td style="text-align: right;">7.000000e+00</td>
+<td style="text-align: right;">3.6948008</td>
+<td style="text-align: right;">12.3074792</td>
+<td style="text-align: right;">0.3684211</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lowflow_Air</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">3.157895e-01</td>
+<td style="text-align: right;">1.376494e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">6.000000e+00</td>
+<td style="text-align: right;">6.000000e+00</td>
+<td style="text-align: right;">3.6948008</td>
+<td style="text-align: right;">12.3074792</td>
+<td style="text-align: right;">0.3157895</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Narcotic_Infusion</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">3.000000e+00</td>
+<td style="text-align: right;">5.587685e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">2.176471e+00</td>
+<td style="text-align: right;">1.482600e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">2.000000e+01</td>
+<td style="text-align: right;">2.000000e+01</td>
+<td style="text-align: right;">1.9277537</td>
+<td style="text-align: right;">2.4421523</td>
+<td style="text-align: right;">1.2819028</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NI_Ventilation</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">8.210526e+00</td>
+<td style="text-align: right;">1.311309e+01</td>
+<td style="text-align: right;">3.000000e+00</td>
+<td style="text-align: right;">6.823529e+00</td>
+<td style="text-align: right;">4.447800e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">4.000000e+01</td>
+<td style="text-align: right;">4.000000e+01</td>
+<td style="text-align: right;">1.6025651</td>
+<td style="text-align: right;">0.9593290</td>
+<td style="text-align: right;">3.0083499</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NPO</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">3.000000e+00</td>
+<td style="text-align: right;">3.771236e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">2.647059e+00</td>
+<td style="text-align: right;">1.482600e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">1.200000e+01</td>
+<td style="text-align: right;">1.200000e+01</td>
+<td style="text-align: right;">1.0303494</td>
+<td style="text-align: right;">-0.3074244</td>
+<td style="text-align: right;">0.8651809</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Oxygen</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">9.789474e+00</td>
+<td style="text-align: right;">1.810334e+01</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">7.117647e+00</td>
+<td style="text-align: right;">1.482600e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">6.500000e+01</td>
+<td style="text-align: right;">6.500000e+01</td>
+<td style="text-align: right;">1.8600959</td>
+<td style="text-align: right;">2.4159329</td>
+<td style="text-align: right;">4.1531915</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PAL</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">5.263160e-02</td>
+<td style="text-align: right;">2.294157e-01</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">3.6948008</td>
+<td style="text-align: right;">12.3074792</td>
+<td style="text-align: right;">0.0526316</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PICC</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.047368e+01</td>
+<td style="text-align: right;">1.237546e+01</td>
+<td style="text-align: right;">1.100000e+01</td>
+<td style="text-align: right;">9.235294e+00</td>
+<td style="text-align: right;">1.630860e+01</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">4.200000e+01</td>
+<td style="text-align: right;">4.200000e+01</td>
+<td style="text-align: right;">1.0672095</td>
+<td style="text-align: right;">0.1612296</td>
+<td style="text-align: right;">2.8391256</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PIV</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">4.736842e+00</td>
+<td style="text-align: right;">5.970689e+00</td>
+<td style="text-align: right;">3.000000e+00</td>
+<td style="text-align: right;">4.176471e+00</td>
+<td style="text-align: right;">4.447800e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">1.900000e+01</td>
+<td style="text-align: right;">1.900000e+01</td>
+<td style="text-align: right;">1.3525571</td>
+<td style="text-align: right;">0.4515423</td>
+<td style="text-align: right;">1.3697699</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sedatives</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">9.473684e-01</td>
+<td style="text-align: right;">2.676517e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">5.294118e-01</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">9.000000e+00</td>
+<td style="text-align: right;">9.000000e+00</td>
+<td style="text-align: right;">2.3589190</td>
+<td style="text-align: right;">3.8629018</td>
+<td style="text-align: right;">0.6140351</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Skin_to_Skin</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.115789e+01</td>
+<td style="text-align: right;">9.081502e+00</td>
+<td style="text-align: right;">1.800000e+01</td>
+<td style="text-align: right;">2.058824e+01</td>
+<td style="text-align: right;">8.895600e+00</td>
+<td style="text-align: right;">9.000000e+00</td>
+<td style="text-align: right;">4.300000e+01</td>
+<td style="text-align: right;">3.400000e+01</td>
+<td style="text-align: right;">0.5739507</td>
+<td style="text-align: right;">-0.5190217</td>
+<td style="text-align: right;">2.0834395</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TPN</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.584211e+01</td>
+<td style="text-align: right;">1.057914e+01</td>
+<td style="text-align: right;">1.100000e+01</td>
+<td style="text-align: right;">1.476471e+01</td>
+<td style="text-align: right;">5.930400e+00</td>
+<td style="text-align: right;">6.000000e+00</td>
+<td style="text-align: right;">4.400000e+01</td>
+<td style="text-align: right;">3.800000e+01</td>
+<td style="text-align: right;">1.0736745</td>
+<td style="text-align: right;">0.2064364</td>
+<td style="text-align: right;">2.4270204</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Transfusion</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">7.894737e-01</td>
+<td style="text-align: right;">1.315673e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">6.470588e-01</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">4.000000e+00</td>
+<td style="text-align: right;">4.000000e+00</td>
+<td style="text-align: right;">1.4757215</td>
+<td style="text-align: right;">0.8898386</td>
+<td style="text-align: right;">0.3018360</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">UA</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">4.052632e+00</td>
+<td style="text-align: right;">3.487656e+00</td>
+<td style="text-align: right;">5.000000e+00</td>
+<td style="text-align: right;">3.941177e+00</td>
+<td style="text-align: right;">4.447800e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">1.000000e+01</td>
+<td style="text-align: right;">1.000000e+01</td>
+<td style="text-align: right;">0.2188818</td>
+<td style="text-align: right;">-1.2760886</td>
+<td style="text-align: right;">0.8001231</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">UV</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">6.736842e+00</td>
+<td style="text-align: right;">3.856338e+00</td>
+<td style="text-align: right;">7.000000e+00</td>
+<td style="text-align: right;">6.647059e+00</td>
+<td style="text-align: right;">2.965200e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">1.500000e+01</td>
+<td style="text-align: right;">1.500000e+01</td>
+<td style="text-align: right;">0.3053109</td>
+<td style="text-align: right;">-0.5116814</td>
+<td style="text-align: right;">0.8847047</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NICU</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">5.326316e+01</td>
+<td style="text-align: right;">2.257049e+01</td>
+<td style="text-align: right;">5.300000e+01</td>
+<td style="text-align: right;">5.147059e+01</td>
+<td style="text-align: right;">2.223900e+01</td>
+<td style="text-align: right;">2.500000e+01</td>
+<td style="text-align: right;">1.120000e+02</td>
+<td style="text-align: right;">8.700000e+01</td>
+<td style="text-align: right;">0.9273246</td>
+<td style="text-align: right;">0.2742034</td>
+<td style="text-align: right;">5.1780249</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Total_INNI</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.910526e+01</td>
+<td style="text-align: right;">2.235545e+01</td>
+<td style="text-align: right;">2.100000e+01</td>
+<td style="text-align: right;">2.705882e+01</td>
+<td style="text-align: right;">8.895600e+00</td>
+<td style="text-align: right;">6.000000e+00</td>
+<td style="text-align: right;">8.700000e+01</td>
+<td style="text-align: right;">8.100000e+01</td>
+<td style="text-align: right;">1.2167437</td>
+<td style="text-align: right;">0.3916699</td>
+<td style="text-align: right;">5.1286916</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Total_vent</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">3.852632e+01</td>
+<td style="text-align: right;">2.301538e+01</td>
+<td style="text-align: right;">3.100000e+01</td>
+<td style="text-align: right;">3.664706e+01</td>
+<td style="text-align: right;">1.779120e+01</td>
+<td style="text-align: right;">1.300000e+01</td>
+<td style="text-align: right;">9.600000e+01</td>
+<td style="text-align: right;">8.300000e+01</td>
+<td style="text-align: right;">0.9853624</td>
+<td style="text-align: right;">-0.0493422</td>
+<td style="text-align: right;">5.2800897</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Total_NILI</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">3.357895e+01</td>
+<td style="text-align: right;">1.746843e+01</td>
+<td style="text-align: right;">3.000000e+01</td>
+<td style="text-align: right;">3.317647e+01</td>
+<td style="text-align: right;">1.630860e+01</td>
+<td style="text-align: right;">9.000000e+00</td>
+<td style="text-align: right;">6.500000e+01</td>
+<td style="text-align: right;">5.600000e+01</td>
+<td style="text-align: right;">0.5264463</td>
+<td style="text-align: right;">-1.0166886</td>
+<td style="text-align: right;">4.0075337</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CSaO2_P</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">9.827895e+01</td>
+<td style="text-align: right;">1.537162e+00</td>
+<td style="text-align: right;">9.890000e+01</td>
+<td style="text-align: right;">9.845882e+01</td>
+<td style="text-align: right;">1.186080e+00</td>
+<td style="text-align: right;">9.360000e+01</td>
+<td style="text-align: right;">9.990000e+01</td>
+<td style="text-align: right;">6.300000e+00</td>
+<td style="text-align: right;">-1.4032691</td>
+<td style="text-align: right;">1.8760110</td>
+<td style="text-align: right;">0.3526490</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hct_P</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.965435e+01</td>
+<td style="text-align: right;">3.493555e+00</td>
+<td style="text-align: right;">2.903233e+01</td>
+<td style="text-align: right;">2.948980e+01</td>
+<td style="text-align: right;">2.206848e+00</td>
+<td style="text-align: right;">2.412795e+01</td>
+<td style="text-align: right;">3.797808e+01</td>
+<td style="text-align: right;">1.385013e+01</td>
+<td style="text-align: right;">0.5630232</td>
+<td style="text-align: right;">-0.0599734</td>
+<td style="text-align: right;">0.8014765</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IN_P</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">9.876370e-02</td>
+<td style="text-align: right;">1.423394e-01</td>
+<td style="text-align: right;">5.000000e-02</td>
+<td style="text-align: right;">7.942320e-02</td>
+<td style="text-align: right;">7.413000e-02</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">5.263158e-01</td>
+<td style="text-align: right;">5.263158e-01</td>
+<td style="text-align: right;">1.6722420</td>
+<td style="text-align: right;">1.9303202</td>
+<td style="text-align: right;">0.0326549</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LI_P</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">6.299580e-01</td>
+<td style="text-align: right;">1.948738e-01</td>
+<td style="text-align: right;">6.212121e-01</td>
+<td style="text-align: right;">6.316725e-01</td>
+<td style="text-align: right;">1.140136e-01</td>
+<td style="text-align: right;">2.307692e-01</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">7.692308e-01</td>
+<td style="text-align: right;">0.0237817</td>
+<td style="text-align: right;">-0.1512869</td>
+<td style="text-align: right;">0.0447071</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NI_P</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.712783e-01</td>
+<td style="text-align: right;">2.225113e-01</td>
+<td style="text-align: right;">2.647059e-01</td>
+<td style="text-align: right;">2.579445e-01</td>
+<td style="text-align: right;">2.500071e-01</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">7.692308e-01</td>
+<td style="text-align: right;">7.692308e-01</td>
+<td style="text-align: right;">0.4473294</td>
+<td style="text-align: right;">-0.7345998</td>
+<td style="text-align: right;">0.0510476</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vent_P</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">7.167105e-01</td>
+<td style="text-align: right;">2.356279e-01</td>
+<td style="text-align: right;">7.441860e-01</td>
+<td style="text-align: right;">7.290212e-01</td>
+<td style="text-align: right;">2.953490e-01</td>
+<td style="text-align: right;">2.241379e-01</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">7.758621e-01</td>
+<td style="text-align: right;">-0.5330321</td>
+<td style="text-align: right;">-1.0525360</td>
+<td style="text-align: right;">0.0540567</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">roomair</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.473684e+01</td>
+<td style="text-align: right;">1.337843e+01</td>
+<td style="text-align: right;">1.100000e+01</td>
+<td style="text-align: right;">1.382353e+01</td>
+<td style="text-align: right;">1.186080e+01</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">4.500000e+01</td>
+<td style="text-align: right;">4.500000e+01</td>
+<td style="text-align: right;">0.7869506</td>
+<td style="text-align: right;">-0.6766205</td>
+<td style="text-align: right;">3.0692229</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hbt</td>
+<td style="text-align: right;">85</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">5.990778e+00</td>
+<td style="text-align: right;">7.057687e-01</td>
+<td style="text-align: right;">5.865117e+00</td>
+<td style="text-align: right;">5.957535e+00</td>
+<td style="text-align: right;">4.458278e-01</td>
+<td style="text-align: right;">4.874334e+00</td>
+<td style="text-align: right;">7.672339e+00</td>
+<td style="text-align: right;">2.798005e+00</td>
+<td style="text-align: right;">0.5630232</td>
+<td style="text-align: right;">-0.0599734</td>
+<td style="text-align: right;">0.1619144</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chi_veiniminuscsf</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1.682491e-01</td>
+<td style="text-align: right;">2.235470e-02</td>
+<td style="text-align: right;">1.683080e-01</td>
+<td style="text-align: right;">1.674121e-01</td>
+<td style="text-align: right;">1.378670e-02</td>
+<td style="text-align: right;">1.337700e-01</td>
+<td style="text-align: right;">2.169560e-01</td>
+<td style="text-align: right;">8.318600e-02</td>
+<td style="text-align: right;">0.2861728</td>
+<td style="text-align: right;">-0.6247419</td>
+<td style="text-align: right;">0.0051285</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CSvO2</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">6.392395e-01</td>
+<td style="text-align: right;">3.975940e-02</td>
+<td style="text-align: right;">6.414106e-01</td>
+<td style="text-align: right;">6.409141e-01</td>
+<td style="text-align: right;">3.494070e-02</td>
+<td style="text-align: right;">5.540449e-01</td>
+<td style="text-align: right;">6.959658e-01</td>
+<td style="text-align: right;">1.419209e-01</td>
+<td style="text-align: right;">-0.5101888</td>
+<td style="text-align: right;">-0.5407964</td>
+<td style="text-align: right;">0.0091214</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">OEF</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">3.493396e-01</td>
+<td style="text-align: right;">4.272720e-02</td>
+<td style="text-align: right;">3.528616e-01</td>
+<td style="text-align: right;">3.473403e-01</td>
+<td style="text-align: right;">5.004960e-02</td>
+<td style="text-align: right;">2.928746e-01</td>
+<td style="text-align: right;">4.397928e-01</td>
+<td style="text-align: right;">1.469182e-01</td>
+<td style="text-align: right;">0.6268974</td>
+<td style="text-align: right;">-0.6397780</td>
+<td style="text-align: right;">0.0098023</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GM_CMRO2</td>
+<td style="text-align: right;">89</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.948613e+01</td>
+<td style="text-align: right;">8.617526e+00</td>
+<td style="text-align: right;">3.095576e+01</td>
+<td style="text-align: right;">2.974816e+01</td>
+<td style="text-align: right;">7.722622e+00</td>
+<td style="text-align: right;">1.090032e+01</td>
+<td style="text-align: right;">4.361748e+01</td>
+<td style="text-align: right;">3.271716e+01</td>
+<td style="text-align: right;">-0.3013535</td>
+<td style="text-align: right;">-0.6645869</td>
+<td style="text-align: right;">1.9769960</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WM_CMRO2</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.308060e+01</td>
+<td style="text-align: right;">6.465269e+00</td>
+<td style="text-align: right;">2.376673e+01</td>
+<td style="text-align: right;">2.327653e+01</td>
+<td style="text-align: right;">5.741861e+00</td>
+<td style="text-align: right;">1.002990e+01</td>
+<td style="text-align: right;">3.280041e+01</td>
+<td style="text-align: right;">2.277050e+01</td>
+<td style="text-align: right;">-0.1843261</td>
+<td style="text-align: right;">-0.9381997</td>
+<td style="text-align: right;">1.4832345</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cerebellum_CMRO2</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">4.468293e+01</td>
+<td style="text-align: right;">1.598040e+01</td>
+<td style="text-align: right;">4.614214e+01</td>
+<td style="text-align: right;">4.492222e+01</td>
+<td style="text-align: right;">1.619630e+01</td>
+<td style="text-align: right;">1.480437e+01</td>
+<td style="text-align: right;">7.049345e+01</td>
+<td style="text-align: right;">5.568909e+01</td>
+<td style="text-align: right;">-0.0952102</td>
+<td style="text-align: right;">-0.9983246</td>
+<td style="text-align: right;">3.6661543</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Deep_GM_CMRO2</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">3.722367e+01</td>
+<td style="text-align: right;">1.322684e+01</td>
+<td style="text-align: right;">3.845176e+01</td>
+<td style="text-align: right;">3.704672e+01</td>
+<td style="text-align: right;">1.379281e+01</td>
+<td style="text-align: right;">1.208109e+01</td>
+<td style="text-align: right;">6.537438e+01</td>
+<td style="text-align: right;">5.329329e+01</td>
+<td style="text-align: right;">0.2699161</td>
+<td style="text-align: right;">-0.3787359</td>
+<td style="text-align: right;">3.0344455</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Brain_Stem_CMRO2</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">5.568999e+01</td>
+<td style="text-align: right;">2.133567e+01</td>
+<td style="text-align: right;">5.582330e+01</td>
+<td style="text-align: right;">5.609312e+01</td>
+<td style="text-align: right;">2.346962e+01</td>
+<td style="text-align: right;">1.449065e+01</td>
+<td style="text-align: right;">9.003602e+01</td>
+<td style="text-align: right;">7.554537e+01</td>
+<td style="text-align: right;">-0.0838440</td>
+<td style="text-align: right;">-0.8922013</td>
+<td style="text-align: right;">4.8947389</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hip_and_Amyg_CMRO2</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">4.114260e+01</td>
+<td style="text-align: right;">1.369379e+01</td>
+<td style="text-align: right;">4.172732e+01</td>
+<td style="text-align: right;">4.129813e+01</td>
+<td style="text-align: right;">1.529480e+01</td>
+<td style="text-align: right;">1.453819e+01</td>
+<td style="text-align: right;">6.510313e+01</td>
+<td style="text-align: right;">5.056494e+01</td>
+<td style="text-align: right;">-0.0666767</td>
+<td style="text-align: right;">-0.6634436</td>
+<td style="text-align: right;">3.1415720</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CSvO2_P</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">6.392395e+01</td>
+<td style="text-align: right;">3.975937e+00</td>
+<td style="text-align: right;">6.414106e+01</td>
+<td style="text-align: right;">6.409141e+01</td>
+<td style="text-align: right;">3.494068e+00</td>
+<td style="text-align: right;">5.540449e+01</td>
+<td style="text-align: right;">6.959658e+01</td>
+<td style="text-align: right;">1.419209e+01</td>
+<td style="text-align: right;">-0.5101888</td>
+<td style="text-align: right;">-0.5407964</td>
+<td style="text-align: right;">0.9121426</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">OEF_P</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">3.493396e+01</td>
+<td style="text-align: right;">4.272722e+00</td>
+<td style="text-align: right;">3.528616e+01</td>
+<td style="text-align: right;">3.473403e+01</td>
+<td style="text-align: right;">5.004956e+00</td>
+<td style="text-align: right;">2.928746e+01</td>
+<td style="text-align: right;">4.397928e+01</td>
+<td style="text-align: right;">1.469182e+01</td>
+<td style="text-align: right;">0.6268974</td>
+<td style="text-align: right;">-0.6397780</td>
+<td style="text-align: right;">0.9802298</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">GM_CBF</td>
+<td style="text-align: right;">14.30068</td>
+<td style="text-align: right;">4.248092</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WM_CBF</td>
+<td style="text-align: right;">11.18311</td>
+<td style="text-align: right;">3.110537</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Deep_GM_CBF</td>
+<td style="text-align: right;">18.10092</td>
+<td style="text-align: right;">6.632392</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Brain_Stem_CBF</td>
+<td style="text-align: right;">27.15718</td>
+<td style="text-align: right;">11.052678</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cerebellum_CBF</td>
+<td style="text-align: right;">21.77752</td>
+<td style="text-align: right;">8.273928</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hip_and_Amyg_CBF</td>
+<td style="text-align: right;">19.98453</td>
+<td style="text-align: right;">6.847789</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GM_CMRO2</td>
+<td style="text-align: right;">29.48613</td>
+<td style="text-align: right;">8.617526</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WM_CMRO2</td>
+<td style="text-align: right;">23.08060</td>
+<td style="text-align: right;">6.465269</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Deep_GM_CMRO2</td>
+<td style="text-align: right;">37.22367</td>
+<td style="text-align: right;">13.226841</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Brain_Stem_CMRO2</td>
+<td style="text-align: right;">55.68999</td>
+<td style="text-align: right;">21.335672</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cerebellum_CMRO2</td>
+<td style="text-align: right;">44.68293</td>
+<td style="text-align: right;">15.980396</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hip_and_Amyg_CMRO2</td>
+<td style="text-align: right;">41.14260</td>
+<td style="text-align: right;">13.693795</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="initial-data-vis" class="level1">
+<h1>Initial Data Vis</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/dayscat-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(<span class="at">file=</span><span class="st">"GAHist.png"</span>, <span class="at">width=</span><span class="dv">7</span>, <span class="at">height=</span><span class="dv">7</span>, <span class="at">units=</span><span class="st">"in"</span>, <span class="at">res=</span><span class="dv">300</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(GAHist_patch)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_bar()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_bar()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_bar()`).</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>png 
+  2 </code></pre>
+</div>
+</div>
+</section>
+<section id="ga-invasive" class="level1">
+<h1>GA ~ Invasive</h1>
+<p>If you are born younger, are you more likely to be on more days of invasive ventilatory support?</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Invasive ~ GA, data = alldata)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-9.582 -4.187 -1.319  2.313 22.524 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)  79.2115    28.4640   2.783   0.0128 *
+GA           -2.5789     0.9869  -2.613   0.0182 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 7.016 on 17 degrees of freedom
+Multiple R-squared:  0.2866,    Adjusted R-squared:  0.2446 
+F-statistic: 6.829 on 1 and 17 DF,  p-value: 0.01818</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Noninvasive ~ GA, data = alldata)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-17.020  -9.119  -3.622   4.675  29.175 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)  185.375     53.628   3.457  0.00301 **
+GA            -5.598      1.859  -3.011  0.00787 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 13.22 on 17 degrees of freedom
+Multiple R-squared:  0.3478,    Adjusted R-squared:  0.3095 
+F-statistic: 9.066 on 1 and 17 DF,  p-value: 0.007868</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Less_Invasive ~ GA, data = alldata)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-13.2216  -4.6409  -0.5248   2.2145  16.7074 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)  -40.258     31.796  -1.266    0.223
+GA             1.725      1.102   1.565    0.136
+
+Residual standard error: 7.837 on 17 degrees of freedom
+Multiple R-squared:  0.1259,    Adjusted R-squared:  0.0745 
+F-statistic: 2.449 on 1 and 17 DF,  p-value: 0.136</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="st">"AABB</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="st">           #CC#"</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>(Cat_v_GA_patch <span class="ot">&lt;-</span> Cat1_v_GAplot <span class="sc">+</span> Cat2_v_GAplot <span class="sc">+</span> Cat3_v_GAplot <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">design =</span> design))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/linreg-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(<span class="at">file=</span><span class="st">"Categories_vs_GA.png"</span>, <span class="at">width=</span><span class="dv">7</span>, <span class="at">height=</span><span class="dv">7</span>, <span class="at">units=</span><span class="st">"in"</span>, <span class="at">res=</span><span class="dv">300</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>png 
+  2 </code></pre>
+</div>
+</div>
+</section>
+<section id="tissue-volume-pma" class="level1">
+<h1>Tissue Volume ~ PMA</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cbf-invasive" class="level1">
+<h1>CBF ~ Invasive</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cbf-noninvasive" class="level1">
+<h1>CBF ~ Noninvasive</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cbf-less-invasive" class="level1">
+<h1>CBF ~ Less Invasive</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cbf-roomair" class="level1">
+<h1>CBF ~ Roomair</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cbf-total-vent" class="level1">
+<h1>CBF ~ Total Vent</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cbf-porportion-of-days-on-ventilation" class="level1">
+<h1>CBF ~ Porportion of days on ventilation</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cbf-percent-of-days-on-invasive-ventilation" class="level1">
+<h1>CBF ~ Percent of Days on Invasive Ventilation</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cbf-percent-of-days-on-noninvasive-ventilation" class="level1">
+<h1>CBF ~ Percent of Days on Noninvasive Ventilation</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cbf-percent-of-days-on-less-invasive-ventilation" class="level1">
+<h1>CBF ~ Percent of Days on Less Invasive Ventilation</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cmro2-invasive" class="level1">
+<h1>CMRO2 ~ Invasive</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cmro2-noninvasive" class="level1">
+<h1>CMRO2 ~ Noninvasive</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cmro2-less-invasive" class="level1">
+<h1>CMRO2 ~ Less Invasive</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cmro2-roomair" class="level1">
+<h1>CMRO2 ~ Roomair</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cmro2-total-vent" class="level1">
+<h1>CMRO2 ~ Total Vent</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cmro2-porportion-of-days-on-ventilation" class="level1">
+<h1>CMRO2 ~ Porportion of days on ventilation</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cmro2-percent-of-days-on-invasive-ventilation" class="level1">
+<h1>CMRO2 ~ Percent of days on invasive ventilation</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cmro2-percent-of-days-on-noninvasive-ventilation" class="level1">
+<h1>CMRO2 ~ Percent of Days on Noninvasive Ventilation</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cmro2-percent-of-days-on-less-invasive-ventilation" class="level1">
+<h1>CMRO2 ~ Percent of Days on Less Invasive Ventilation</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="patchwork-plots" class="level1">
+<h1>Patchwork Plots</h1>
+<section id="proportion" class="level2">
+<h2 class="anchored" data-anchor-id="proportion">Proportion</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>(CBFandCMRO2_v_ProportionVent <span class="ot">&lt;-</span> CBF_v_VentPerc_patch <span class="sc">/</span> CMRO2_v_PropVent_patch <span class="sc">+</span> <span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">'A'</span>) <span class="sc">&amp;</span> <span class="fu">theme</span>(<span class="at">plot.tag =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/proportion-1.png" class="img-fluid figure-img" width="1440"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">'CBFandCMRO2vProportionVent.png'</span>, <span class="at">width=</span><span class="dv">15</span>, <span class="at">height=</span><span class="dv">15</span>, <span class="at">units=</span><span class="st">"in"</span>, <span class="at">dpi=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+</div>
+</section>
+<section id="category-2" class="level2">
+<h2 class="anchored" data-anchor-id="category-2">Category 2</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>(CBFandCMRO2_v_Category2 <span class="ot">&lt;-</span> CBF_v_NonInvasive_patch <span class="sc">/</span> CMRO2_v_NonInvasive_patch <span class="sc">+</span> <span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">'A'</span>) <span class="sc">&amp;</span> <span class="fu">theme</span>(<span class="at">plot.tag =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1 row containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1 row containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/cat2-1.png" class="img-fluid figure-img" width="1440"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">'CBFandCMRO2vCategory2.png'</span>, <span class="at">width=</span><span class="dv">15</span>, <span class="at">height=</span><span class="dv">15</span>, <span class="at">units=</span><span class="st">"in"</span>, <span class="at">dpi=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1 row containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1 row containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+</div>
+</section>
+<section id="roomair" class="level2">
+<h2 class="anchored" data-anchor-id="roomair">Roomair</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>(CBFandCMRO2_v_Roomair <span class="ot">&lt;-</span> CBF_v_Roomair_patch <span class="sc">/</span> CMRO2_v_roomair_patch <span class="sc">+</span> <span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">'A'</span>) <span class="sc">&amp;</span> <span class="fu">theme</span>(<span class="at">plot.tag =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/roomair-1.png" class="img-fluid figure-img" width="1440"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">'CBFandCMRO2vRoomair.png'</span>, <span class="at">width=</span><span class="dv">15</span>, <span class="at">height=</span><span class="dv">15</span>, <span class="at">units=</span><span class="st">"in"</span>, <span class="at">dpi=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="csvo2" class="level1">
+<h1>CSVO2</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="csao2" class="level1">
+<h1>CSaO2</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-57-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-59-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="hct" class="level1">
+<h1>Hct</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-60-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-61-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-63-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="oef" class="level1">
+<h1>OEF</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-65-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-66-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-67-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-68-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-69-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="volume-invasive" class="level1">
+<h1>Volume ~ Invasive</h1>
+<section id="brain-stem" class="level2">
+<h2 class="anchored" data-anchor-id="brain-stem">Brain Stem</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CMRO2_Analysis_files/figure-html/unnamed-chunk-70-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="tables" class="level1">
+<h1>Tables</h1>
+<section id="cbf" class="level2">
+<h2 class="anchored" data-anchor-id="cbf">CBF</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>ROI</th>
+<th>Category 1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CGM</td>
+<td>0.05 [-0.31 to 0.41] / 0.02</td>
+</tr>
+<tr class="even">
+<td>WM</td>
+<td>0.08 [-0.17 to 0.32] / 0.13</td>
+</tr>
+<tr class="odd">
+<td>DeepGM</td>
+<td>-0.05 [-0.59 to 0.5] / 0.06</td>
+</tr>
+<tr class="even">
+<td>Cerebellum</td>
+<td>0.18 [-0.5 to 0.87] / 0.07</td>
+</tr>
+<tr class="odd">
+<td>Brainstem</td>
+<td>0.17 [-0.75 to 1.09] / 0.05</td>
+</tr>
+<tr class="even">
+<td>Hipandamyg</td>
+<td>0.05 [-0.53 to 0.63] / 0.02</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>ROI</th>
+<th>Category 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CGM</td>
+<td>0.2 [0.05 to 0.36] / 0.34</td>
+</tr>
+<tr class="even">
+<td>WM</td>
+<td>0.15 [0.05 to 0.26] / 0.44</td>
+</tr>
+<tr class="odd">
+<td>DeepGM</td>
+<td>0.28 [0.02 to 0.53] / 0.3</td>
+</tr>
+<tr class="even">
+<td>Cerebellum</td>
+<td>0.43 [0.14 to 0.72] / 0.44</td>
+</tr>
+<tr class="odd">
+<td>Brainstem</td>
+<td>0.59 [0.2 to 0.97] / 0.44</td>
+</tr>
+<tr class="even">
+<td>Hipandamyg</td>
+<td>0.33 [0.08 to 0.59] / 0.35</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>ROI</th>
+<th>Category 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CGM</td>
+<td>0.13 [-0.14 to 0.4] / 0.08</td>
+</tr>
+<tr class="even">
+<td>WM</td>
+<td>0.07 [-0.12 to 0.26] / 0.14</td>
+</tr>
+<tr class="odd">
+<td>DeepGM</td>
+<td>0.16 [-0.26 to 0.57] / 0.1</td>
+</tr>
+<tr class="even">
+<td>Cerebellum</td>
+<td>0.21 [-0.31 to 0.73] / 0.09</td>
+</tr>
+<tr class="odd">
+<td>Brainstem</td>
+<td>0.21 [-0.49 to 0.92] / 0.06</td>
+</tr>
+<tr class="even">
+<td>Hipandamyg</td>
+<td>0.13 [-0.31 to 0.57] / 0.04</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>ROI</th>
+<th>Proportion of Days on All Categories</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CGM</td>
+<td>10.27 [2.17 to 18.37] / 0.34</td>
+</tr>
+<tr class="even">
+<td>WM</td>
+<td>6.7 [0.86 to 12.55] / 0.36</td>
+</tr>
+<tr class="odd">
+<td>DeepGM</td>
+<td>15.82 [3.51 to 28.13] / 0.37</td>
+</tr>
+<tr class="even">
+<td>Cerebellum</td>
+<td>18.81 [2.98 to 34.64] / 0.33</td>
+</tr>
+<tr class="odd">
+<td>Brainstem</td>
+<td>25.22 [3.9 to 46.53] / 0.32</td>
+</tr>
+<tr class="even">
+<td>Hipandamyg</td>
+<td>16.73 [3.73 to 29.73] / 0.34</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>ROI</th>
+<th>Room Air</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CGM</td>
+<td>-0.15 [-0.29 to -0.02] / 0.28</td>
+</tr>
+<tr class="even">
+<td>WM</td>
+<td>-0.1 [-0.19 to 0] / 0.3</td>
+</tr>
+<tr class="odd">
+<td>DeepGM</td>
+<td>-0.23 [-0.44 to -0.03] / 0.32</td>
+</tr>
+<tr class="even">
+<td>Cerebellum</td>
+<td>-0.26 [-0.53 to 0.01] / 0.26</td>
+</tr>
+<tr class="odd">
+<td>Brainstem</td>
+<td>-0.36 [-0.72 to 0] / 0.26</td>
+</tr>
+<tr class="even">
+<td>Hipandamyg</td>
+<td>-0.25 [-0.47 to -0.03] / 0.29</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="cmro2" class="level2">
+<h2 class="anchored" data-anchor-id="cmro2">CMRO2</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>ROI</th>
+<th>Category 1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CGM</td>
+<td>0.04 [-0.68 to 0.77] / 0.04</td>
+</tr>
+<tr class="even">
+<td>WM</td>
+<td>0.13 [-0.39 to 0.64] / 0.14</td>
+</tr>
+<tr class="odd">
+<td>DeepGM</td>
+<td>-0.19 [-1.27 to 0.89] / 0.09</td>
+</tr>
+<tr class="even">
+<td>Cerebellum</td>
+<td>0.27 [-1.03 to 1.56] / 0.1</td>
+</tr>
+<tr class="odd">
+<td>Brainstem</td>
+<td>0.2 [-1.55 to 1.96] / 0.07</td>
+</tr>
+<tr class="even">
+<td>Hipandamyg</td>
+<td>0 [-1.15 to 1.15] / 0.04</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>ROI</th>
+<th>Category 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CGM</td>
+<td>0.31 [-0.04 to 0.66] / 0.22</td>
+</tr>
+<tr class="even">
+<td>WM</td>
+<td>0.24 [-0.01 to 0.48] / 0.31</td>
+</tr>
+<tr class="odd">
+<td>DeepGM</td>
+<td>0.41 [-0.13 to 0.95] / 0.22</td>
+</tr>
+<tr class="even">
+<td>Cerebellum</td>
+<td>0.7 [0.11 to 1.29] / 0.36</td>
+</tr>
+<tr class="odd">
+<td>Brainstem</td>
+<td>0.96 [0.17 to 1.75] / 0.36</td>
+</tr>
+<tr class="even">
+<td>Hipandamyg</td>
+<td>0.52 [-0.03 to 1.07] / 0.24</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>ROI</th>
+<th>Category 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CGM</td>
+<td>0.25 [-0.29 to 0.79] / 0.1</td>
+</tr>
+<tr class="even">
+<td>WM</td>
+<td>0.15 [-0.24 to 0.54] / 0.16</td>
+</tr>
+<tr class="odd">
+<td>DeepGM</td>
+<td>0.3 [-0.52 to 1.12] / 0.12</td>
+</tr>
+<tr class="even">
+<td>Cerebellum</td>
+<td>0.39 [-0.59 to 1.38] / 0.13</td>
+</tr>
+<tr class="odd">
+<td>Brainstem</td>
+<td>0.4 [-0.95 to 1.74] / 0.09</td>
+</tr>
+<tr class="even">
+<td>Hipandamyg</td>
+<td>0.25 [-0.63 to 1.13] / 0.06</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>ROI</th>
+<th>Proportion of Days on All Categories</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CGM</td>
+<td>23.31 [8.19 to 38.44] / 0.44</td>
+</tr>
+<tr class="even">
+<td>WM</td>
+<td>15.68 [4.38 to 26.98] / 0.44</td>
+</tr>
+<tr class="odd">
+<td>DeepGM</td>
+<td>34.74 [11.97 to 57.5] / 0.46</td>
+</tr>
+<tr class="even">
+<td>Cerebellum</td>
+<td>40.71 [12.88 to 68.54] / 0.45</td>
+</tr>
+<tr class="odd">
+<td>Brainstem</td>
+<td>54.63 [16.85 to 92.4] / 0.43</td>
+</tr>
+<tr class="even">
+<td>Hipandamyg</td>
+<td>37.23 [13.28 to 61.17] / 0.44</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>ROI</th>
+<th>Room Air</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CGM</td>
+<td>-0.36 [-0.62 to -0.11] / 0.41</td>
+</tr>
+<tr class="even">
+<td>WM</td>
+<td>-0.24 [-0.43 to -0.05] / 0.41</td>
+</tr>
+<tr class="odd">
+<td>DeepGM</td>
+<td>-0.54 [-0.92 to -0.16] / 0.43</td>
+</tr>
+<tr class="even">
+<td>Cerebellum</td>
+<td>-0.6 [-1.08 to -0.12] / 0.39</td>
+</tr>
+<tr class="odd">
+<td>Brainstem</td>
+<td>-0.82 [-1.46 to -0.18] / 0.38</td>
+</tr>
+<tr class="even">
+<td>Hipandamyg</td>
+<td>-0.58 [-0.98 to -0.17] / 0.41</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="csvo2-1" class="level1">
+<h1>CSVO2</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>ROI</th>
+<th>Category 1</th>
+<th>Category 2</th>
+<th>Category 3</th>
+<th>Proportion of Days on All Categories</th>
+<th>Room Air</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Wholebrain</td>
+<td>-0.16 [-0.51 to 0.2] / -0.1</td>
+<td>0.06 [-0.14 to 0.25] / -0.13</td>
+<td>-0.06 [-0.34 to 0.22] / -0.15</td>
+<td>-0.68 [-10.72 to 9.36] / -0.16</td>
+<td>-0.02 [-0.19 to 0.14] / -0.15</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="csao2-1" class="level1">
+<h1>CSaO2</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>ROI</th>
+<th>Category 1</th>
+<th>Category 2</th>
+<th>Category 3</th>
+<th>Proportion of Days on All Categories</th>
+<th>Room Air</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Wholebrain</td>
+<td>-0.05 [-0.18 to 0.08] / 0.06</td>
+<td>-0.06 [-0.12 to 0] / 0.23</td>
+<td>0.02 [-0.08 to 0.12] / 0.03</td>
+<td>0.34 [-3.23 to 3.91] / 0.02</td>
+<td>-0.01 [-0.07 to 0.05] / 0.02</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="oef-1" class="level1">
+<h1>OEF</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>ROI</th>
+<th>Category 1</th>
+<th>Category 2</th>
+<th>Category 3</th>
+<th>Proportion of Days on All Categories</th>
+<th>Room Air</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Wholebrain</td>
+<td>0.13 [-0.26 to 0.52] / -0.14</td>
+<td>-0.1 [-0.31 to 0.11] / -0.1</td>
+<td>0.07 [-0.23 to 0.38] / -0.15</td>
+<td>0.83 [-10.03 to 11.68] / -0.17</td>
+<td>0.02 [-0.16 to 0.19] / -0.17</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="hct-1" class="level1">
+<h1>Hct</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>ROI</th>
+<th>Category 1</th>
+<th>Category 2</th>
+<th>Category 3</th>
+<th>Proportion of Days on All Categories</th>
+<th>Room Air</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Wholebrain</td>
+<td>-0.19 [-0.49 to 0.12] / -0.07</td>
+<td>-0.02 [-0.2 to 0.15] / -0.18</td>
+<td>-0.05 [-0.3 to 0.19] / -0.17</td>
+<td>2.35 [-6.48 to 11.17] / -0.16</td>
+<td>-0.09 [-0.23 to 0.05] / -0.05</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save.image</span>(<span class="st">"results.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -2565,6 +2565,5 @@ theme_minimalism()
 
 ```{r}
 save.image("results.RData")
-
 ```
 
