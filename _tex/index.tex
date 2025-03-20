@@ -80,15 +80,17 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 % definitions for citeproc citations
@@ -180,9 +182,7 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
+
 \usepackage{bookmark}
 
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
@@ -197,6 +197,7 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
+
 \title{Assessing Regional Cerebral Oxygen Consumption
 (CMRO\textsubscript{2}) in Preterm Neonates: A Quantitative MRI Cohort
 Study with Exploratory Analysis of Respiratory Support}
@@ -209,6 +210,7 @@ Weber*\textsuperscript{1,2,6,*}}
 
 \begin{document}
 \maketitle
+
 
 \textsuperscript{1} School of Biomedical Engineering, The University of
 British Columbia, Vancouver, BC, Canada\\
@@ -227,7 +229,7 @@ Columbia, Vancouver, BC, Canada
 \textless{}aweber@bcchr.ca\textgreater{}}
 
 \textsubscript{Source:
-\href{https://WeberLab.github.io/CMRO2_Manuscript/index-preview.html}{Article
+\href{https://WeberLab.github.io/CMRO2_Manuscript/index.qmd.html}{Article
 Notebook}}
 
 \textsuperscript{*} Joint senior authors
@@ -531,7 +533,7 @@ Figure~\ref{fig-dayscat}).
 
 \centering{
 
-\includegraphics{index_files/figure-latex/notebooks-CMRO2_Analysis-dayscat-output-2.png}
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/notebooks-CMRO2_Analysis-dayscat-output-2.png}}
 
 \textsubscript{Source:
 \href{https://WeberLab.github.io/CMRO2_Manuscript/notebooks/CMRO2_Analysis.qmd.html\#cell-dayscat}{NatalieCNN}}
@@ -554,7 +556,7 @@ respiratory support is shown in Figure~\ref{fig-distribution}.
 
 \centering{
 
-\includegraphics{./Figures/Figure2_Distribution of Time on Category of Ventilation_font.png}
+\pandocbounded{\includegraphics[keepaspectratio]{./Figures/Figure2_Distribution of Time on Category of Ventilation_font.png}}
 
 }
 
@@ -572,7 +574,7 @@ ventilation) respiratory support, but not Category 3
 
 \centering{
 
-\includegraphics{index_files/figure-latex/.-notebooks-CMRO2_Analysis-linreg-output-2.png}
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/.-notebooks-CMRO2_Analysis-linreg-output-2.png}}
 
 \textsubscript{Source:
 \href{https://WeberLab.github.io/CMRO2_Manuscript/notebooks/CMRO2_Analysis.qmd.html\#cell-linreg}{NatalieCNN}}
@@ -592,7 +594,7 @@ in Figure~\ref{fig-sampleimages}.
 
 \centering{
 
-\includegraphics{./Figures/Figure4_combined_300dpi.png}
+\pandocbounded{\includegraphics[keepaspectratio]{./Figures/Figure4_combined_300dpi.png}}
 
 }
 
@@ -631,7 +633,7 @@ are summarized in Table~\ref{tbl-linreg}.
 
 \centering{
 
-\includegraphics{index_files/figure-latex/.-notebooks-CMRO2_Analysis-proportion-output-2.png}
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/.-notebooks-CMRO2_Analysis-proportion-output-2.png}}
 
 \textsubscript{Source:
 \href{https://WeberLab.github.io/CMRO2_Manuscript/notebooks/CMRO2_Analysis.qmd.html\#cell-proportion}{NatalieCNN}}
@@ -651,7 +653,7 @@ regression including GA and PMA as confounding factors.}
 
 \centering{
 
-\includegraphics{index_files/figure-latex/.-notebooks-CMRO2_Analysis-cat2-output-2.png}
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/.-notebooks-CMRO2_Analysis-cat2-output-2.png}}
 
 \textsubscript{Source:
 \href{https://WeberLab.github.io/CMRO2_Manuscript/notebooks/CMRO2_Analysis.qmd.html\#cell-cat2}{NatalieCNN}}
@@ -671,7 +673,7 @@ GA and PMA as confounding factors.}
 
 \centering{
 
-\includegraphics{index_files/figure-latex/.-notebooks-CMRO2_Analysis-roomair-output-2.png}
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/.-notebooks-CMRO2_Analysis-roomair-output-2.png}}
 
 \textsubscript{Source:
 \href{https://WeberLab.github.io/CMRO2_Manuscript/notebooks/CMRO2_Analysis.qmd.html\#cell-roomair}{NatalieCNN}}
@@ -1367,7 +1369,7 @@ characteristic of the study sample.}}
 \renewcommand*{\arraystretch}{1}
 
 \textsubscript{Source:
-\href{https://WeberLab.github.io/CMRO2_Manuscript/index-preview.html}{Article
+\href{https://WeberLab.github.io/CMRO2_Manuscript/index.qmd.html}{Article
 Notebook}}
 
 \newpage{}
@@ -1400,12 +1402,12 @@ Hippocampus and Amygdala & 19.98 ± 6.85 & 41.14 ± 13.69 \\
 \newpage{}
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}@{}}
 \caption{\textbf{Results from linear regression of physiological
 parameters with days on various forms of respiratory support.} All
 analyses included GA and PMA as confounding variables. CGM = cortical
@@ -1513,22 +1515,22 @@ n/a & -0.19 {[}-0.49 to 0.12{]} / -0.07 & -0.02 {[}-0.2 to 0.15{]} /
 \newpage{}
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.2750}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0350}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.2450}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0650}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0500}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0600}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0700}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0900}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1100}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}@{}}
 \caption{\textbf{Comparison of the arterial oxygenation, venous
 oxygenation, oxygen extraction fraction, cerebral blood flow, and
 cerebral metabolic rate of oxygen obtained from this study with that of
 previous reports.} CBF = cerebral blood flow; CMRO2 = cerebral metabolic
 rate of oxygen; CSvO2 = cerebral venous oxygen saturation; CSaO2 =
 cerebral arterial oxygen saturation; OEF = oxygen extraction fraction;
-Hct = hematocrit \^{}*\^{}Median and interquartile range
+Hct = hematocrit \^{}* Median and interquartile range
 reported.}\label{tbl-litvalues}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
@@ -1600,6 +1602,7 @@ Qi et al, (2018) (Qi et al.~2018)* & MRI & 38 healthy & 35.71 (5.36) &
 & & 23 Punctate White Matter Lesions (PWML) & 35.14 (3.29) & 95 (2) &
 68.7 (16.3) & 27.53 (18.94) & 12.63 (7.83) & 29.11 (16.8) \\
 \end{longtable}
+
 
 
 
