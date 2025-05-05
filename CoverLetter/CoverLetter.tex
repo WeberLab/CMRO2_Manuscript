@@ -1,0 +1,53 @@
+\documentclass[12pt]{letter}
+
+\usepackage[includeheadfoot, a4paper, margin=1in, headheight=107pt]{geometry}
+\addtolength{\topmargin}{-.75in}
+\addtolength{\textheight}{.75in}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage[colorlinks]{hyperref}
+
+\setlength{\parindent}{20pt}
+
+\pagestyle{fancy}
+  \lhead{\footnotesize {\includegraphics[width=0.25\textwidth]{bcchlogo.jpg}} }
+\lfoot{\footnotesize \parbox{11cm}{\includegraphics[width=0.4\textwidth]{UBCLogo.png}}  }
+\cfoot{}
+\rhead{\footnotesize {\color{blue} \textbf{BC Children's Hospital Research Institute} \\  
+950 West 28$^{th}$ Avenue, Vancouver, B.C. V5Z 4H4\\
+\textbf{t} 604.875.3194 \textbf{f} 604.875.2496\\
+www.bcchr.ca\\
+ }}
+% \rfoot{\footnotesize Page \thepage\ of \pageref*{LastPage}}
+
+\renewcommand{\footrulewidth}{0.4pt}
+
+\newcommand{\journal}{NMR in Biomedicine}
+
+\begin{document}
+\name{ Dr. Alexander Mark Weber }
+\signature{ Dr. Alexander Mark Weber }
+\begin{letter}{}
+	\vspace*{-2cm}
+	\opening{ \noindent Dear \journal\space editorial board,}
+	\thispagestyle{fancy}% sets the current page style to 'fancy' -- must occur *after* \opening
+
+	We wish to submit our original manuscript entitled ``Assessing Regional Cerebral Oxygen Consumption (CMRO$_{2}$) in Preterm Neonates: A Quantitative MRI Cohort Study with Exploratory Analysis of Respiratory Support'' for consideration by \journal. Our study presents a novel multi-modal MRI approach for non-invasively measuring cerebral oxygen metabolism in preterm infants. Given the journal’s focus on advancing biomedical applications of NMR, we believe our findings will be of particular interest to your readership.
+
+	This work introduces an MRI-based method to quantify cerebral blood flow (CBF) and cerebral metabolic rate of oxygen (CMRO$_{2}$) in very preterm infants, a critical step in understanding brain development and vulnerability to injury. Our exploratory analysis suggests that different modes of respiratory support influence cerebral oxygenation, with non-invasive ventilation associated with increased oxygen delivery and utilization. These insights could enhance clinical strategies for neonatal care and long-term neurodevelopmental outcomes.
+
+	We confirm that this manuscript has not been published elsewhere and is not under consideration by another journal. All authors have approved the manuscript and agree with its
+	submission to \journal. We have no conflicts of interest to disclose.
+
+
+
+	Thank you for your consideration of our manuscript.
+
+	\closing{ Sincerely, \\
+		\vspace{10pt}
+		\includegraphics[width=150pt]{signature}}
+
+\end{letter}
+
+\end{document}
