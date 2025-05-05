@@ -1,4 +1,5 @@
 % Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
@@ -7,21 +8,22 @@
   letterpaper,
   DIV=11,
   numbers=noendperiod]{scrartcl}
-
+\usepackage{xcolor}
 \usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
 \usepackage{lmodern}
-\ifPDFTeX\else  
-    % xetex/luatex font selection
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -39,9 +41,6 @@
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
 \makeatother
-\usepackage{xcolor}
-\setlength{\emergencystretch}{3em} % prevent overfull lines
-\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 % Make \paragraph and \subparagraph free-standing
 \makeatletter
 \ifx\paragraph\undefined\else
@@ -67,8 +66,7 @@
 \makeatother
 
 
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -80,17 +78,21 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
+
+
 % definitions for citeproc citations
 \NewDocumentCommand\citeproctext{}{}
 \NewDocumentCommand\citeproc{mm}{%
@@ -124,6 +126,18 @@
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
 
 \usepackage{fontspec}
 \usepackage{multirow}
@@ -180,15 +194,11 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
 \usepackage{bookmark}
-
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
-  pdftitle={Assessing Regional Cerebral Oxygen Consumption (CMRO2) in Preterm Neonates: A Quantitative MRI Cohort Study with Exploratory Analysis of Respiratory Support},
+  pdftitle={Assessing Semi-Regional Cerebral Oxygen Consumption (CMRO2) in Preterm Neonates: A Quantitative MRI Cohort Study with Exploratory Analysis of Respiratory Support},
   pdfauthor={, , , , , and },
   colorlinks=true,
   linkcolor={blue},
@@ -197,7 +207,8 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
-\title{Assessing Regional Cerebral Oxygen Consumption
+
+\title{Assessing Semi-Regional Cerebral Oxygen Consumption
 (CMRO\textsubscript{2}) in Preterm Neonates: A Quantitative MRI Cohort
 Study with Exploratory Analysis of Respiratory Support}
 \author{Chen Shuang Zhu\textsuperscript{1,2} \and Natalie
@@ -206,9 +217,9 @@ Holsti\textsuperscript{5} \and Ruth E
 Grunau*\textsuperscript{2,6} \and Alexander Mark
 Weber*\textsuperscript{1,2,6,*}}
 \date{}
-
 \begin{document}
 \maketitle
+
 
 \textsuperscript{1} School of Biomedical Engineering, The University of
 British Columbia, Vancouver, BC, Canada\\
@@ -226,15 +237,13 @@ Columbia, Vancouver, BC, Canada
 \href{mailto:aweber@bcchr.ca}{Alexander Mark Weber*
 \textless{}aweber@bcchr.ca\textgreater{}}
 
-\textsubscript{Source:
-\href{https://WeberLab.github.io/CMRO2_Manuscript/index-preview.html}{Article
-Notebook}}
-
 \textsuperscript{*} Joint senior authors
 
 \textbf{Keywords:} cerebral metabolic rate of oxygen; cerebral blood
 flow; ventilation; preterm; respiratory support; arterial spin labeling;
 quantitative susceptibility mapping
+
+\textbf{Wordcount:} 4,864
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -246,35 +255,9 @@ gestational age; CGM = cortical grey matter; DGM = deep grey matter; Hct
 = hematocrit; NICU = neonatal intensive care unit; NIRS = near-infrared
 spectroscopy; OEF = oxygen extraction fraction; PMA = post-menstrual
 age; PPM = parts per million; QSM = quantitative susceptibility mapping;
-T2-TRIR = T2 Prepared Tissue Relaxation Inversion Recovery; TRUST =
-T2-relaxation-under-spin-tagging;
-
-\section{Summary Section}\label{summary-section}
-
-\textbf{PREVIOUS LITERATURE:} Quantitative estimates of brain oxygen
-consumption can be achieved using oxygen-15 PET or xenon clearance
-techniques, which measure cerebral blood flow but are invasive and
-involve ionizing radiation, limiting their use in neonates. A less
-invasive option is near-infrared spectroscopy (NIRS), which estimates
-cerebral venous oxygen saturation (CSvO\textsubscript{2}) but is limited
-to regional assessments and superficial brain tissue. Non-invasive MRI
-techniques have been explored, including venous oxygenation measurements
-with TRUST MRI, MR susceptometry, and T2-TRIR MRI pulse sequences,
-showing feasibility in neonates and correlating well with previous
-methods.
-
-\textbf{KEY FINDINGS:} Using a novel, non-invasive MRI technique and
-analysis pipeline, CBF and CMRO\textsubscript{2} values were measured in
-very preterm neonates at TEA and found to align closely with reference
-values. CBF and CMRO\textsubscript{2} values were associated with time
-in room air and non-invasive ventilation.
-
-\textbf{KNOWLEDGE ADVANCEMENT:} We introduced a novel MRI technique and
-analysis pipeline, and demonstrated that non-invasive respiratory
-support in very preterm infants is associated with increased cerebral
-oxygenation and consumption, while room air is linked to lower values.
-Regional brain analysis revealed that respiratory support impacts
-different brain structures uniquely.
+T\textsubscript{2}-TRIR = T\textsubscript{2} Prepared Tissue Relaxation
+Inversion Recovery; TRUST =
+T\textsubscript{2}-relaxation-under-spin-tagging;
 
 \newpage{}
 
@@ -284,14 +267,15 @@ different brain structures uniquely.
 measuring oxygen consumption at both regional and whole-brain levels in
 preterm infants is crucial for assessing brain development and neuronal
 injury in this vulnerable population. This study presents a multi-modal
-MRI technique and analysis pipeline designed for this purpose, which we
+MRI technique and analysis pipeline that produces whole-brain
+semi-regional maps - with the potential to be fully regional - which we
 employ in a cohort study to investigate how the duration of various
 respiratory supports in very preterm infants affects CBF and the
 cerebral metabolic rate of oxygen (CMRO\textsubscript{2}).
 
-\textbf{METHODS:} Infants (n=19) born \textless32 weeks gestational age
-were recruited in the neonatal intensive care unit. Infants were scanned
-at term-equivalent age using a 3T MRI sequence comprising of
+\textbf{METHODS:} Infants (n = 19) born \textless{} 32 weeks gestational
+age were recruited in the neonatal intensive care unit. Infants were
+scanned at term-equivalent age using a 3T MRI sequence comprising of
 T\textsubscript{1}-weighted, T\textsubscript{2}-weighted, arterial spin
 labeling (ASL), and SWI. Days on three different categories of
 respiratory support, based on levels of invasiveness, were recorded.
@@ -301,19 +285,19 @@ proportion of days on respiratory support; GA and PMA were used as
 confounding factors.
 
 \textbf{RESULTS:} Average CBF and CMRO\textsubscript{2} of cortical grey
-matter was 14.3 ± 4.25 mL/100g/min and 29.49 ± 29.49 µmol/100g/min,
-respectively. CMRO\textsubscript{2} and CBF were positively correlated
-with days on non-invasive respiratory support, and negatively correlated
-with days in room air.
+matter was 14.3 ± 4.25 mL / 100 g / min and 29.49 ± 29.49 µmol / 100 g /
+min, respectively. CMRO\textsubscript{2} and CBF were positively
+correlated with days on non-invasive respiratory support, and negatively
+correlated with days in room air.
 
 \textbf{CONCLUSION:} Using our novel method, CBF and
 CMRO\textsubscript{2} values aligned closely with literature values. Our
 exploratory findings suggest that the type of respiratory support may
 influence cerebral oxygenation during the neonatal period in infants
 born very preterm, with greater oxygen delivery and consumption
-associated with non-invasive respiratory support. Our regional brain
-analysis further highlights that different brain structures are impacted
-in distinct ways.
+associated with non-invasive respiratory support. Our semi-regional
+brain analysis further highlights that different brain structures are
+impacted in distinct ways.
 
 \section{Introduction}\label{sec-intro}
 
@@ -354,18 +338,19 @@ being debated\textsuperscript{13--16}
 Non-invasive MRI-based techniques are actively being explored to assess
 whole-brain oxygen consumption. One approach combines non-invasive
 venous oxygenation measurements from the sagittal sinus using
-T2-relaxation-under-spin-tagging magnetic resonance imaging
-(TRUST\textsuperscript{17}) with flow measurements from phase-contrast
-MR angiography, which has been used in adults\textsuperscript{18} and
-has shown feasibility in neonates\textsuperscript{19,20}. Another method
-combines MR susceptometry to measure venous oxygenation in the sagittal
-sinus with phase-contrast MR angiography\textsuperscript{21}. Studies
-using this technique in neonates demonstrated that the results correlate
-well with those obtained through diffuse optical and correlation
-spectroscopy methods\textsuperscript{22}. Still another method applied
-in neonates is the T2 prepared tissue relaxation inversion recovery
-(T2-TRIR) MRI pulse sequence\textsuperscript{23}, which measures the
-transverse and longitudinal relaxation rate of blood
+T\textsubscript{2}-relaxation-under-spin-tagging magnetic resonance
+imaging (TRUST\textsuperscript{17}) with flow measurements from
+phase-contrast MR angiography, which has been used in
+adults\textsuperscript{18} and has shown feasibility in
+neonates\textsuperscript{19,20}. Another method combines MR
+susceptometry to measure venous oxygenation in the sagittal sinus with
+phase-contrast MR angiography\textsuperscript{21}. Studies using these
+techniques in neonates demonstrated that the results correlate well with
+those obtained through diffuse optical and correlation spectroscopy
+methods\textsuperscript{22}. Still another method applied in neonates is
+the T\textsubscript{2} prepared tissue relaxation inversion recovery
+(T\textsubscript{2}-TRIR) MRI pulse sequence\textsuperscript{23}, which
+measures the transverse and longitudinal relaxation rate of blood
 (T\textsubscript{2b} and T\textsubscript{1b}) in the sagittal sinus, and
 venous oxygenation subsequently derived from the T\textsubscript{2b} and
 the T\textsubscript{1b}-derived hematocrit\textsuperscript{24}.
@@ -373,18 +358,18 @@ the T\textsubscript{1b}-derived hematocrit\textsuperscript{24}.
 In the current study, we propose a new method using quantitative
 susceptibility mapping (QSM) and arterial spin labeling (ASL) -- in
 combination with hematocrit (Hct) and pulse oximetry -- to determine
-regional whole-brain cerebral metabolic rate of oxygen
-(CMRO\textsubscript{2}) and CBF. In order to investigate the validity of
-this new non-invasive approach we compared the obtained results to
-previously reported reference values\textsuperscript{19,20,25--29}. In
-addition, we conducted an exploratory analysis to evaluate if the
-technique can detect whether the degree of lung disease, as indicated by
-the duration of time on different levels of respiratory support in
-very-preterm neonates, is correlated with brain oxygenation measures
-CMRO\textsubscript{2} and CBF in different brain regions at
-term-equivalent age. We hypothesized the CMRO\textsubscript{2} and CBF
-would be negatively correlated with time on invasive respiratory
-support.
+whole-brain semi-regional cerebral metabolic rate of oxygen
+(CMRO\textsubscript{2}) and regional CBF. In order to investigate the
+validity of this new non-invasive approach we compared the obtained
+results to previously reported reference
+values\textsuperscript{19,20,25--29}. In addition, we conducted an
+exploratory analysis to evaluate if the technique can detect whether the
+degree of lung disease, as indicated by the duration of time on
+different levels of respiratory support in very-preterm neonates, is
+correlated with brain oxygenation measures CMRO\textsubscript{2} and CBF
+in different brain regions at term-equivalent age. We hypothesized the
+CMRO\textsubscript{2} and CBF would be negatively correlated with time
+on invasive respiratory support.
 
 \section{Methods}\label{methods}
 
@@ -401,7 +386,7 @@ The study was approved by the Clinical Research Ethics Board at the ***
 and written informed consent was obtained from the parent/guardian for
 each infant.
 
-Preterm neonates born \textless32 weeks gestational age (GA) (n=20)
+Preterm neonates born \textless{} 32 weeks gestational age (GA) (n=20)
 admitted to the level III neonatal intensive care unit (NICU) at *** in
 *** were recruited by a research nurse from February 2021 to January
 2022. Our sample size was determined based on similar recruitment
@@ -409,10 +394,10 @@ numbers from previous studies\textsuperscript{19,20,25--29}. Inclusion
 criteria were infants born less than 32 weeks GA. Infants were excluded
 if there was evidence of a congenital malformation or syndrome, a TORCH
 infection, or ultrasound evidence of large periventricular hemorrhagic
-infarction (\textgreater2 cm, Grade 4 intra-ventricular hemorrhage).
+infarction (\textgreater{} 2 cm, Grade 4 intra-ventricular hemorrhage).
 Parents were approached by the research nurse about the study shortly
 before being discharged from the NICU. Infants returned to the hospital
-for the study at TEA (37-44 weeks PMA) for the MRI scan. One infant
+for the study at TEA (37 - 44 weeks PMA) for the MRI scan. One infant
 remained in hospital on respiratory support at 44 weeks PMA, and was
 withdrawn from the study. The final number of infants scanned was 19.
 The clinical characteristics of the subjects are shown in
@@ -648,52 +633,52 @@ characteristic of the study sample.}}
 
 \renewcommand*{\arraystretch}{1}
 
-\textsubscript{Source:
-\href{https://WeberLab.github.io/CMRO2_Manuscript/index-preview.html}{Article
-Notebook}}
-
 \subsection{MRI data acquisition}\label{mri-data-acquisition}
 
 All scans took place at the *** 's MRI Research Facility and were
 performed on a 3.0 Tesla General Electric Discovery MR750 (scanner
 software version DV26.0\_R03) with a SREE Medical Systems single channel
-neonatal head coil. Infants were fed and swaddled by a research nurse
-prior to being placed in an MRI compatible incubator for imaging (SREE
-Medical Systems). Molded foam was placed around the infant's body and
-head to minimize head movement and ear plugs were used for ear
-protection. Arterial oxygen saturation and heart rate were monitored and
-measured continuously throughout the scan using a pulse oximeter placed
-on the foot of the infant. A neonatologist *** and primary investigator
-*** were present throughout the scan.
+neonatal head coil. All scans were research-dedicated and not research
+sequences added on to clinical scans. Infants were fed and swaddled by a
+research nurse prior to being placed in an MRI compatible incubator for
+imaging (SREE Medical Systems). Molded foam was placed around the
+infant's body and head to minimize head movement and ear plugs were used
+for ear protection. Arterial oxygen saturation (CSaO\textsubscript{2})
+and heart rate were monitored and measured continuously throughout the
+scan using a pulse oximeter placed on the foot of the infant. A
+neonatologist *** and primary investigator *** were present throughout
+the scan.
 
-MRI scans were performed using a protocol consisting of a T1-weighted
-scan, a T2-weighted scan, a pseudo-continuous ASL scan to measure CBF,
-an SWI scan to generate QSM maps, and a diffusion weighted imaging spin
-echo EPI sequence (not included in this report). Sequences were repeated
-when large motion artifacts were detected. If an infant awoke or was
-moving during the scan, the scanning was stopped, and a research nurse
-entered the MRI room to monitor and ensure the infant fell back to
-sleep.
+MRI scans were performed using a protocol consisting of a
+T\textsubscript{1}-weighted scan, a T\textsubscript{2}-weighted scan, a
+pseudo-continuous ASL scan to measure CBF, an SWI scan to generate QSM
+maps, and a diffusion weighted imaging spin echo EPI sequence (not
+included in this report). Sequences were repeated when large motion
+artifacts were detected. If an infant awoke or was moving during the
+scan, the scanning was stopped, and a research nurse entered the MRI
+room to monitor and ensure the infant fell back to sleep.
 
-The T1-weighted coronal 3D-FSPGR parameters were: 2.97ms TE, 7.74ms TR,
-12 degrees flip angle, 20cm FOV, 512x512 matrix, 0.39x0.39 mm in-plane
-resolution, 1mm slice thickness, 126 slices, and a scan duration of
-4min39 s. The T2-weighted sagittal 3D-CUBE parameters were: 66.29ms TE,
-2,300ms TR, 90 degrees flip angle, 20cm FOV, 256x256 matrix, 0.78x0.78
-mm in-plane resolution, 1mm slice thickness, 106 slices, and a scan
-duration of 5min1s.
+The T\textsubscript{1}-weighted coronal 3D-FSPGR parameters were: 2.97
+ms TE, 7.74 ms TR, 12 degrees flip angle, 20 cm FOV, 512 x 512 matrix,
+0.39 x 0.39 mm in-plane resolution, 1 mm slice thickness, 126 slices,
+and a scan duration of 4 min 39 s. The T\textsubscript{2}-weighted
+sagittal 3D-CUBE parameters were: 66.29 ms TE, 2,300 ms TR, 90 degrees
+flip angle, 20 cm FOV, 256 x 256 matrix, 0.78 x 0.78 mm in-plane
+resolution, 1 mm slice thickness, 106 slices, and a scan duration of 5
+min 1s.
 
 The pseudo-continuous ASL axial multi-shot spiral 3D fast spin-echo
-parameters were: 10.55ms TE, 4.68s TR, 111 degrees flip angle, 24cm FOV,
-128x128 matrix, 1.875x1.875 mm in-plane resolution, 4mm slice thickness,
-50 slices, 1,450ms label period, 2,025ms pulse label delay, 24
-control-label pairs, and a scan duration of 5min26 s.
+parameters were: 10.55 ms TE, 4.68 s TR, 111 degrees flip angle, 24 cm
+FOV, 128 x 128 matrix, 1.875 x 1.875 mm in-plane resolution, 4 mm slice
+thickness, 25 slices, 1,450 ms label period, 2,025 ms post-labeling
+delay, 24 control-label pairs, and a scan duration of 5 min 26 s.
 
 The SWI axial 3D spoiled GRE flow compensated parameters were: five
-equally spaced echoes, 5ms first TE, 5.24ms echo spacing, 30.9ms TR, 20
-degrees flip angle, 25cm FOV, 256x256 matrix, 0.977mm in-plane
-resolution, 2mm slice thickness, 92 slices, and a scan duration of
-5min29s.
+equally spaced echoes, 5 ms first TE, 5.24 ms echo spacing, 30.9 ms TR,
+20 degrees flip angle, 25 cm FOV, 256 x 256 matrix, 0.977 mm in-plane
+resolution, 2 mm slice thickness reconstructed to 1 mm using zero-padded
+Fourier interpolation (ZIP2), 46 slices, and a scan duration of 5 min
+29s.
 
 A DWI spin-echo EPI sequence was also acquired, but was not analyzed for
 this study.
@@ -717,15 +702,157 @@ and Category 3 being the lowest.
 \subsection{MRI data processing}\label{mri-data-processing}
 
 Imaging data was processed using an in-house pipeline written in
-\texttt{Bash} shell script by *** with minor edits by ***. A
-step-by-step summary of the pipeline can be found in the Supplementary
-Materials.
+\texttt{Bash} shell script by *** with minor edits by ***. Large
+portions of the pipeline use the FMRIB Software Library (\texttt{FSL};
+v6.0)\textsuperscript{30}. A csv file consisting of all the subject IDs,
+age in weeks, and the folder numbers of the raw imaging data was used as
+an input to the pipeline. A \texttt{dcm2bids}\textsuperscript{31}
+configuration JSON file was created using information from the input
+file which assigns the raw imaging DICOM files a data type, modality
+label, phase encoding direction for spin echo field maps, sidecar file
+name which corresponds to the chronological order of the scan
+acquisition, and sidecar changes. The \texttt{dcm2bids} tool used Chris
+Rorden's \texttt{dcmniix}\textsuperscript{32} to convert the raw DICOM
+files to NIfTI (Neuroimaging Informatics Technology Initiative) format
+and organized the data according to the Brain Imaging Data Structure
+(BIDS) standard format\textsuperscript{33}.
+
+The T\textsubscript{1}w and T\textsubscript{2}w files were then
+processed using the dHCP structural pipeline\textsuperscript{34}. The
+dHCP structural pipeline is a specialized neonatal pipeline that
+automates registration, segmentation, surface extraction, and surface
+registration of structural MRI images of the neonatal brain. A docker
+container was set up to run the dHCP structural pipeline using the
+subject ID, age in weeks, T\textsubscript{1}w, and T\textsubscript{2}w
+images. The dHCP pipeline first uses \texttt{FSL}'s
+\texttt{bet}\textsuperscript{35} to perform an initial skull-stripping
+with a fractional intensity threshold of 0.1. Tissue segmentation is
+then accomplished using the DRAW-EM algorithm\textsuperscript{36}, which
+uses an atlas-based segmentation technique and an
+Expectation-Maximization scheme that combines the structure priors and
+an intensity model of the volume.
+
+Tissue labels were then thresholded and binarized using \texttt{FSL}'s
+\texttt{fslmaths} to create a total of nine masks. These regions
+included the CSF, cortical grey matter (CGM), WM, background,
+ventricles, cerebellum, deep GM (DGM), brainstem, and the hippocampus
+and amygdala as one mask.
+
+QSM imaging data of all five echoes was then post-processed from the
+phase data using a script from Christian Kames
+(\href{https://github.com/kamesy/QSM.m}{github.com/kamesy/QSM.m})\textsuperscript{37}
+which follows the recommended implementation of QSM for clinical
+research in the brain\textsuperscript{38}. A brain mask from the fifth
+echo magnitude image was obtained using \texttt{FSL}'s \texttt{bet}.
+Improved brain masks were obtained from the square of the magnitude
+image (\texttt{fslmaths\ -sqr}). A two-voxel kernel was used to erode
+the brain mask. Phase unwrapping was achieved using a 3D Laplacian
+algorithm and background field removal was completed by fitting a fourth
+order 3D polynomial to the unfiltered phase data. A Gaussian filter
+(\(\sigma\) = 0.5) was applied to the normalized field maps to smooth
+out high frequency errors from reconstruction. A two-step dipole
+inversion algorithm was used to solve the dipole inversion
+problem\textsuperscript{39}. \texttt{Fslroi} and \texttt{fslmaths} were
+then used to retrieve the average of the last three echoes.
+R\textsubscript{2}\textsuperscript{*} maps were calculated by performing
+a linear fit of the logarithm of the magnitude values against the TEs.
+Finally, vascular masks were created using Sina Straub's
+\texttt{GRE\_vessel\_seg}
+(\href{https://github.com/SinaStraub/GRE_vessel_seg}{github.com/SinaStraub/GRE\_vessel\_seg})\textsuperscript{40}
+with elements borrowed from Warda-Taqdees Syeda's \texttt{QSMART}
+(\href{https://github.com/wtsyeda/QSMART}{textgithub.com/wtsyeda/QSMART})\textsuperscript{41--44};
+both of which make use of Chunlei Liu's
+\texttt{STI\ Suite}\textsuperscript{45}. Default parameter settings were
+used including a recursive ridge filter and a scale number (kernel size)
+equal to 4\textsuperscript{46}. The \(\chi\) of cerebral veins was then
+measured by thresholding out values below 0.15 parts per million
+(ppm)\textsuperscript{47,48} and averaged within the vascular mask to
+find the mean of non-zero voxels. CSvO\(_{2}\) can then be calculated
+using the averaged \(\chi\) value and the following
+equation\textsuperscript{49}:
+
+\begin{equation}\phantomsection\label{eq-csvo2}{
+CSvO_{2} = 1 - \frac{\left( \Delta \chi _{blood} - \Delta \chi _{oxy} \cdot Hct \right)}{\left( \Delta \chi _{do} \cdot Hct \right)}
+}\end{equation}
+
+where CSvO\textsubscript{2} is the cerebral venous oxygen saturation,
+\(\Delta \chi _{blood}\) is the measured susceptibility difference
+between blood and water, \(\Delta \chi _{oxy}\) is the susceptibility
+changes of oxygenated red blood cells relative to water,
+\(\Delta \chi _{do}\) is the susceptibility difference between
+oxygenated and deoxygenated red blood cells, and Hct is the hematocrit
+value. \(\Delta \chi _{blood}\) was the averaged \(\chi\) of cerebral
+veins minus the average \(\chi\) of CSF; \(\Delta \chi _{oxy}\) was
+-0.21 * 4 ppm as per Sedlacik et al (2007)\textsuperscript{50} and
+Portnoy et al (2018)\textsuperscript{51}; \(\Delta \chi _{do}\) was
+-0.03 * 4 ppm as per Weisskoff and Kiihne (1992)\textsuperscript{49};
+and Hct was predicted based on previous measured values for the day of
+the scan.
+
+Oxygen extraction fraction (OEF) was calculated as:
+
+\begin{equation}\phantomsection\label{eq-oef}{
+OEF = (CSaO_{2} - CSvO_{2}) / CSaO_{2}
+}\end{equation}
+
+where CSaO\textsubscript{2} was calculated from the pulse oximeter
+during the MRI scan and CSvO\textsubscript{2} was calculated from
+Equation~\ref{eq-csvo2}.
+
+ASL imaging data was then post-processed in the pipeline using an
+in-house python script to generate a CBF map *** . The imaging data
+consisted of two images, a PWI which is the difference between the
+control and labeled images, and a proton density image which is used for
+scaling signal intensities. The python script uses the PWI and proton
+density images along with other neonatal specific parameters derived
+from the literature and the MRI acquisition parameters as inputs and
+generates a CBF map with the following quantification model:
+
+\begin{equation}\phantomsection\label{eq-cbf}{
+CBF = 6000 \cdot \lambda \frac{\left( 1 - \exp(-\frac{ST(s)}{T_{1t}(s)})\right) \exp(\frac{PLD(s)}{T_{1b}(s)})}{2 \cdot T_{1b}(s) \cdot \left( 1 - \exp(-\frac{LT(s)}{T_{1b}(s)})\right) \cdot \epsilon \cdot NEX_{PW}} \left( \frac{PW}{SF_{PW}\cdot PD}\right)
+}\end{equation}
+
+where CBF is the cerebral blood flow in mL / 100 g / min, \(\lambda\) is
+the blood/tissue water partition coefficient set to 0.9 mL / g as per
+Alsop et al.~(2015)\textsuperscript{52}, T\textsubscript{1b} is the
+longitudinal relaxation time of blood and was set to 1.89 s as per De
+Vis et al.~(2014)\textsuperscript{53}, T\textsubscript{1t} is the
+longitudinal relaxation time of tissue and was set to 1.2 s, ST is the
+saturation time (2 s), LT is the labeling duration (1.45 s), PLD is the
+labeling delay (2.025 s), \(\epsilon\) is the efficiency set to 0.6,
+NEX\textsubscript{pw} is the number of excitations for PWI images (3),
+SF\textsubscript{pw} is the PWI sequence scaling factor (32), PW is the
+perfusion weighted image, and PD is the proton density image. The
+constant 6000 converts the unit from mL / g / s to mL / 100 g / min.
+
+The volume of the tissue masks for each ROI was calculated using
+\texttt{fslstats}. The tissue masks were registered to the averaged
+\(\chi\) and CBF map by applying the mask and taking the mean of the
+whole image. All generated variables including the ROI volumes and
+averages in tissue masks were output into a comma separated variable
+file with the subject ID and headers for each corresponding column.
+
+Using values from the csv file, the following equation was used to
+quantify CMRO\textsubscript{2} in \texttt{R}:
+
+\begin{equation}\phantomsection\label{eq-cmro2}{
+CMRO_{2} = OE \cdot CBF \cdot HbT = \left(CSaO_{2} - CSvO_{2} \right) \cdot CBF \cdot HbT
+}\end{equation}
+
+where CMRO\textsubscript{2} is the cerebral metabolic rate of oxygen in
+\(\mu\)mol / 100 g / min, OE is the oxygen extraction (the difference
+between CSaO\textsubscript{2} and CSvO\textsubscript{2}), CBF is the
+cerebral blood flow in mL / 100 g / min, HbT is the hemoglobin
+concentration and is generally assumed to be Hct / (3 mL / g * 0.01625 g
+/ \(\mu\)mol)\textsuperscript{54,55}. Semi-regional
+CMRO\textsubscript{2} and regional CBF values were calculated by
+averaging within specific ROIs.
 
 \subsection{Statistics}\label{statistics}
 
 Statistical analysis was performed using \texttt{R} (v.
-4.4.3)\textsuperscript{30} and \texttt{R\ studio} (v. 2022.12.0 Build
-353)\textsuperscript{31}. A multiple linear regression analysis was
+4.4.3)\textsuperscript{56} and \texttt{R\ studio} (v. 2022.12.0 Build
+353)\textsuperscript{57}. A multiple linear regression analysis was
 conducted to examine relationships between dependent variables CBF or
 CMRO\textsubscript{2} and independent variables (e.g.~days on Category 1
 support). GA at birth and post-menstrual age (PMA) at time of scan were
@@ -749,21 +876,18 @@ brainstem volumes.
 
 \section{Results}\label{results}
 
-Median (Q1-Q3) GA at birth and PMA at scan were 28.86 (27.79--29.93) and
-40.57 (39.29--41.36), respectively. Median (Q1-Q3) days on Categories 1,
-2, and 3 respiratory support, in room air, and length of stay in the
-NICU were 2 (0--4), 19 (11.5--32), 7 (5.5--12), 11 (3.5--23), and 53
-(37--60), respectively (Table~\ref{tbl-characteristics} and
-Figure~\ref{fig-dayscat}).
+Median (Q1-Q3) GA at birth and PMA at scan time were 28.86 (27.79 --
+29.93) and 40.57 (39.29 -- 41.36) weeks, respectively. Median (Q1-Q3)
+days on Categories 1, 2, and 3 respiratory support, in room air, and
+length of stay in the NICU were 2 (0 -- 4), 19 (11.5 -- 32), 7 (5.5 --
+12), 11 (3.5 -- 23), and 53 (37 -- 60), respectively
+(Table~\ref{tbl-characteristics} and Figure~\ref{fig-dayscat}).
 
 \begin{figure}
 
 \centering{
 
-\includegraphics{index_files/figure-latex/notebooks-CMRO2_Analysis-dayscat-output-2.png}
-
-\textsubscript{Source:
-\href{https://WeberLab.github.io/CMRO2_Manuscript/notebooks/CMRO2_Analysis.qmd.html\#cell-dayscat}{NatalieCNN}}
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/notebooks-CMRO2_Analysis-dayscat-output-2.png}}
 
 }
 
@@ -783,7 +907,7 @@ respiratory support is shown in Figure~\ref{fig-distribution}.
 
 \centering{
 
-\includegraphics{./Figures/Figure2_Distribution of Time on Category of Ventilation_font.png}
+\pandocbounded{\includegraphics[keepaspectratio]{./Figures/Figure2_Distribution of Time on Category of Ventilation_font.png}}
 
 }
 
@@ -801,10 +925,7 @@ ventilation) respiratory support, but not Category 3
 
 \centering{
 
-\includegraphics{index_files/figure-latex/.-notebooks-CMRO2_Analysis-linreg-output-2.png}
-
-\textsubscript{Source:
-\href{https://WeberLab.github.io/CMRO2_Manuscript/notebooks/CMRO2_Analysis.qmd.html\#cell-linreg}{NatalieCNN}}
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/.-notebooks-CMRO2_Analysis-linreg-output-2.png}}
 
 }
 
@@ -821,30 +942,31 @@ in Figure~\ref{fig-sampleimages}.
 
 \centering{
 
-\includegraphics{./Figures/Figure4_combined_300dpi.png}
+\pandocbounded{\includegraphics[keepaspectratio]{./Figures/Figure4_combined_300dpi.png}}
 
 }
 
 \caption{\label{fig-sampleimages}\textbf{Sample images from a subject of
 various MRI results.} All images show a sagittal, coronal and axial
-slice from left to right. A) is a T2w image in the background with
-segmentation overlaid in various colors: dark blue = cerebellum; pink =
-brainstem; light blue = CSF; yellow = white matter; dark orange =
-cortical grey matter; green = ventricles; light orange = deep grey
-matter; dark red = hippocampus and amygdala. B) is a processed CBF map
-from 0 to 47.5 mL/100g/min. C) is a QSM image in the background from
--0.1 to 0.1 ppm susceptibility overlaid with a venous mask in red. D) is
-a processed CMRO\textsubscript{2} image from 0 to 93 µmol/100g/min. Note
-that B) and D) look identical as D is simply B multiplied by a value
-determined by CSaO\textsubscript{2}, CSvO\textsubscript{2}, and Hct.
-However, this value will be different for every subject.}
+slice from left to right. A) is a T\textsubscript{2}w image in the
+background with segmentation overlaid in various colors: dark blue =
+cerebellum; pink = brainstem; light blue = CSF; yellow = white matter;
+dark orange = cortical grey matter; green = ventricles; light orange =
+deep grey matter; dark red = hippocampus and amygdala. B) is a processed
+CBF map from 0 to 47.5 mL/100g/min. C) is a QSM image in the background
+from -0.1 to 0.1 ppm susceptibility overlaid with a venous mask in red.
+D) is a processed CMRO\textsubscript{2} image from 0 to 93
+µmol/100g/min. Note that B) and D) look identical as D is simply B
+multiplied by a value determined by CSaO\textsubscript{2},
+CSvO\textsubscript{2}, and Hct (see Equation~\ref{eq-cmro2}). However,
+this value will be different for every subject.}
 
 \end{figure}%
 
 Mean whole-brain CSvO\textsubscript{2}, CSaO\textsubscript{2}, Hct and
-oxygen extraction fraction (OEF) values were 63.9 ± 4, 98.3 ± 1.5, 29.7
-± 3.5, and 34.9 ± 4.3, respectively. Regional mean CBF and
-CMRO\textsubscript{2} values are shown in Table~\ref{tbl-regvalues}. The
+OEF values were 63.9 ± 4 \%, 98.3 ± 1.5 \%, 29.7 ± 3.5 \%, and 34.9 ±
+4.3 \%, respectively. Semi-regional mean CMRO\textsubscript{2} and
+regional CBF and values are shown in Table~\ref{tbl-regvalues}. The
 lowest CBF and CMRO\textsubscript{2} values were found in the WM, while
 the highest CBF and CMRO\textsubscript{2} values were found in the
 brainstem.
@@ -863,17 +985,18 @@ brainstem.
 
 \providecommand{\ascline}[3]{\noalign{\global\arrayrulewidth #1}\arrayrulecolor[HTML]{#2}\cline{#3}}
 
-\begin{longtable}[c]{|p{2.48in}|p{1.93in}|p{2.39in}}
+\begin{longtable}[c]{|p{2.48in}|p{1.93in}|p{2.35in}}
 
-\caption{\label{tbl-regvalues}\textbf{Regional mean ± standard deviation
-CBF and CMRO2 values.} White matter tissue was found to have the lowest
-CBF/CMRO2 values, while the brainstem had the highest.}
+\caption{\label{tbl-regvalues}\textbf{Semi-regional
+CMRO\textsubscript{2} and regional CBF mean ± standard deviation
+values.} White matter tissue was found to have the lowest
+CBF/CMRO\textsubscript{2} values, while the brainstem had the highest.}
 
 \tabularnewline
 
 \hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=0pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=0pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=0pt}-}
 
-\multicolumn{1}{>{\cellcolor[HTML]{D3D3D3}\centering}m{\dimexpr 2.48in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\textbf{ROI}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{D3D3D3}\centering}m{\dimexpr 1.93in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\textbf{CBF\ (mL/100g/min)}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{D3D3D3}\centering}m{\dimexpr 2.39in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\textbf{CMRO2\ (µmol/100g/min)}}}}} \\
+\multicolumn{1}{>{\cellcolor[HTML]{D3D3D3}\centering}m{\dimexpr 2.48in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\textbf{ROI}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{D3D3D3}\centering}m{\dimexpr 1.93in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\textbf{CBF\ (mL/100g/min)}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{D3D3D3}\centering}m{\dimexpr 2.35in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\textbf{CMRO₂\ (µmol/100g/min)}}}}} \\
 
 \noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
 
@@ -881,7 +1004,7 @@ CBF/CMRO2 values, while the brainstem had the highest.}
 
 \hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=0pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=0pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=0pt}-}
 
-\multicolumn{1}{>{\cellcolor[HTML]{D3D3D3}\centering}m{\dimexpr 2.48in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\textbf{ROI}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{D3D3D3}\centering}m{\dimexpr 1.93in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\textbf{CBF\ (mL/100g/min)}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{D3D3D3}\centering}m{\dimexpr 2.39in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\textbf{CMRO2\ (µmol/100g/min)}}}}} \\
+\multicolumn{1}{>{\cellcolor[HTML]{D3D3D3}\centering}m{\dimexpr 2.48in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\textbf{ROI}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{D3D3D3}\centering}m{\dimexpr 1.93in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\textbf{CBF\ (mL/100g/min)}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{D3D3D3}\centering}m{\dimexpr 2.35in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\textbf{CMRO₂\ (µmol/100g/min)}}}}} \\
 
 \noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
 
@@ -889,7 +1012,7 @@ CBF/CMRO2 values, while the brainstem had the highest.}
 
 
 
-\multicolumn{1}{>{\raggedright}m{\dimexpr 2.48in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{CGM}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 1.93in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{14.3}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{4.25}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 2.39in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{29.49}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{8.62}}}} \\
+\multicolumn{1}{>{\raggedright}m{\dimexpr 2.48in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{CGM}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 1.93in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{14.3}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{4.25}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 2.35in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{29.49}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{8.62}}}} \\
 
 \noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
 
@@ -897,7 +1020,7 @@ CBF/CMRO2 values, while the brainstem had the highest.}
 
 
 
-\multicolumn{1}{>{\raggedright}m{\dimexpr 2.48in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{WM}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 1.93in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{11.18}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{3.11}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 2.39in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{23.08}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{6.47}}}} \\
+\multicolumn{1}{>{\raggedright}m{\dimexpr 2.48in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{WM}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 1.93in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{11.18}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{3.11}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 2.35in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{23.08}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{6.47}}}} \\
 
 \noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
 
@@ -905,7 +1028,7 @@ CBF/CMRO2 values, while the brainstem had the highest.}
 
 
 
-\multicolumn{1}{>{\raggedright}m{\dimexpr 2.48in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{DGM}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 1.93in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{18.1}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{6.63}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 2.39in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{37.22}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{13.23}}}} \\
+\multicolumn{1}{>{\raggedright}m{\dimexpr 2.48in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{DGM}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 1.93in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{18.1}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{6.63}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 2.35in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{37.22}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{13.23}}}} \\
 
 \noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
 
@@ -913,7 +1036,7 @@ CBF/CMRO2 values, while the brainstem had the highest.}
 
 
 
-\multicolumn{1}{>{\raggedright}m{\dimexpr 2.48in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{Brainstem}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 1.93in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{27.16}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{11.05}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 2.39in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{55.69}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{21.34}}}} \\
+\multicolumn{1}{>{\raggedright}m{\dimexpr 2.48in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{Brainstem}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 1.93in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{27.16}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{11.05}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 2.35in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{55.69}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{21.34}}}} \\
 
 \noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
 
@@ -921,7 +1044,7 @@ CBF/CMRO2 values, while the brainstem had the highest.}
 
 
 
-\multicolumn{1}{>{\raggedright}m{\dimexpr 2.48in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{Cerebellum}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 1.93in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{21.78}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{8.27}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 2.39in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{44.68}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{15.98}}}} \\
+\multicolumn{1}{>{\raggedright}m{\dimexpr 2.48in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{Cerebellum}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 1.93in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{21.78}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{8.27}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 2.35in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{44.68}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{15.98}}}} \\
 
 \noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
 
@@ -929,7 +1052,7 @@ CBF/CMRO2 values, while the brainstem had the highest.}
 
 
 
-\multicolumn{1}{>{\raggedright}m{\dimexpr 2.48in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{Hippocampus}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{and}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{Amygdala}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 1.93in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{19.98}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{6.85}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 2.39in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{41.14}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{13.69}}}} \\
+\multicolumn{1}{>{\raggedright}m{\dimexpr 2.48in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{Hippocampus}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{and}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{Amygdala}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 1.93in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{19.98}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{6.85}}}} & \multicolumn{1}{>{\raggedleft}m{\dimexpr 2.35in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{41.14}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{±}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\ }}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{13.69}}}} \\
 
 \noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
 
@@ -937,7 +1060,7 @@ CBF/CMRO2 values, while the brainstem had the highest.}
 
 
 
-\multicolumn{3}{>{\raggedright}m{\dimexpr 6.79in+4\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\textsuperscript{}}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{CBF\ =\ cerebral\ blood\ flow;\ CMRO2\ =\ cerebral\ metabolic\ rate\ of\ oxygen;\ ROI\ =\ region\ of\ interest;\ CGM\ =\ cerebral\ grey\ matter;\ WM\ =\ white\ matter;\ DGM\ =\ deep\ grey\ matter}}}} \\
+\multicolumn{3}{>{\raggedright}m{\dimexpr 6.76in+4\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{\textsuperscript{}}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{DejaVu Sans}{CBF\ =\ cerebral\ blood\ flow;\ CMRO₂\ =\ cerebral\ metabolic\ rate\ of\ oxygen;\ ROI\ =\ region\ of\ interest;\ CGM\ =\ cerebral\ grey\ matter;\ WM\ =\ white\ matter;\ DGM\ =\ deep\ grey\ matter}}}} \\
 
 \noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{FFFFFF}
 
@@ -954,25 +1077,19 @@ CBF/CMRO2 values, while the brainstem had the highest.}
 
 \renewcommand*{\arraystretch}{1}
 
-\textsubscript{Source:
-\href{https://WeberLab.github.io/CMRO2_Manuscript/index-preview.html}{Article
-Notebook}}
-
-Multiple linear regression analysis of regional CMRO\textsubscript{2}
-and CBF showed significant positive correlations with proportion of days
-on respiratory support (Figure~\ref{fig-proportion}), days on Category 2
-respiratory support (Figure~\ref{fig-cat2}), and significant negative
-correlations with days in room air (Figure~\ref{fig-roomair}). Results
-are summarized in Table~\ref{tbl-linreg}.
+Multiple linear regression analysis of semi-regional
+CMRO\textsubscript{2} and regional CBF showed significant positive
+correlations with proportion of days on respiratory support
+(Figure~\ref{fig-proportion}), days on Category 2 respiratory support
+(Figure~\ref{fig-cat2}), and significant negative correlations with days
+in room air (Figure~\ref{fig-roomair}). Results are summarized in
+Table~\ref{tbl-linreg}.
 
 \begin{figure}
 
 \centering{
 
-\includegraphics{index_files/figure-latex/.-notebooks-CMRO2_Analysis-proportion-output-2.png}
-
-\textsubscript{Source:
-\href{https://WeberLab.github.io/CMRO2_Manuscript/notebooks/CMRO2_Analysis.qmd.html\#cell-proportion}{NatalieCNN}}
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/.-notebooks-CMRO2_Analysis-proportion-output-2.png}}
 
 }
 
@@ -989,10 +1106,7 @@ regression including GA and PMA as confounding factors.}
 
 \centering{
 
-\includegraphics{index_files/figure-latex/.-notebooks-CMRO2_Analysis-cat2-output-2.png}
-
-\textsubscript{Source:
-\href{https://WeberLab.github.io/CMRO2_Manuscript/notebooks/CMRO2_Analysis.qmd.html\#cell-cat2}{NatalieCNN}}
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/.-notebooks-CMRO2_Analysis-cat2-output-2.png}}
 
 }
 
@@ -1009,10 +1123,7 @@ GA and PMA as confounding factors.}
 
 \centering{
 
-\includegraphics{index_files/figure-latex/.-notebooks-CMRO2_Analysis-roomair-output-2.png}
-
-\textsubscript{Source:
-\href{https://WeberLab.github.io/CMRO2_Manuscript/notebooks/CMRO2_Analysis.qmd.html\#cell-roomair}{NatalieCNN}}
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/.-notebooks-CMRO2_Analysis-roomair-output-2.png}}
 
 }
 
@@ -1268,10 +1379,6 @@ support.} All analyses included GA and PMA as confounding variables.}
 
 \renewcommand*{\arraystretch}{1}
 
-\textsubscript{Source:
-\href{https://WeberLab.github.io/CMRO2_Manuscript/index-preview.html}{Article
-Notebook}}
-
 \section{Discussion}\label{discussion}
 
 We presented the initial results of a novel, non-invasive MRI method and
@@ -1449,10 +1556,6 @@ from previous research}
 
 \renewcommand*{\arraystretch}{1}
 
-\textsubscript{Source:
-\href{https://WeberLab.github.io/CMRO2_Manuscript/index-preview.html}{Article
-Notebook}}
-
 One strength of using ASL compared to similar studies that used
 phase-contrast to calculate CBF is the ability to look at regional
 changes in CBF as opposed to a single number for the
@@ -1465,23 +1568,26 @@ However, using ASL in infants also has drawbacks that should be
 considered, including low signal-to-noise ratio, quantification
 difficulties due to uncertainty in labelling efficiency and bolus
 arrival time, and the rapid changes that occur in such young populations
-that make single-imaging-protocol difficult\textsuperscript{32}.
+that make single-imaging-protocol difficult\textsuperscript{58}. Another
+method future researchers should consider is quantitative blood
+oxygenation level-dependent imaging (qBOLD)\textsuperscript{59}.
 
 Similarly, a strength of using QSM to study CSvO\textsubscript{2} rather
 than previous MRI methods that used the TRUST\textsuperscript{19,20} or
-T2-TRIR\textsuperscript{26}, is that QSM produces a whole-brain map with
-high spatial resolution. By producing a whole-brain map, we were able to
-measure the CSvO\textsubscript{2} by averaging over all internal veins.
-This is likely to produce a more robust measurement than acquiring a
-single slice and averaging within the superior sagittal sinus (SSS) as
-TRUST and T2-TRIR do. For the current study, our QSM maps were
-reconstructed to a 0.9x0.9x0.9mm\textsuperscript{3} resolution, but
-future studies would benefit from acquiring and reconstructing up to
-0.5x0.5x0.5 mm\textsubscript{3}. Indeed, greater spatial resolution
-would likely improve CSvO\textsubscript{2} measurements as \(\chi\)
-values could be better isolated to venous tissue without including
-non-venous sources. Finally, QSM could also allow for regional analysis
-of CSvO\textsubscript{2} values, which we did not attempt here.
+T\textsubscript{2}-TRIR\textsuperscript{26}, is that QSM produces a
+whole-brain map with high spatial resolution. By producing a whole-brain
+map, we were able to measure the CSvO\textsubscript{2} by averaging over
+all internal veins. This is likely to produce a more robust measurement
+than acquiring a single slice and averaging within the superior sagittal
+sinus (SSS) as TRUST and T\textsubscript{2}-TRIR do. For the current
+study, our QSM maps were reconstructed to a 0.9 x 0.9 x 0.9
+mm\textsuperscript{3} resolution, but future studies would benefit from
+acquiring and reconstructing up to 0.5 x 0.5 x 0.5
+mm\textsuperscript{3}. Indeed, greater spatial resolution would likely
+improve CSvO\textsubscript{2} measurements as \(\chi\) values could be
+better isolated to venous tissue without including non-venous sources.
+Finally, higher resolution QSM could also allow for fully regional
+analysis of CSvO\textsubscript{2} values, which we did not attempt here.
 Unfortunately, as our method for calculating QSM requires removing brain
 tissue along the edge of the brain (an eroded brain mask), we could not
 measure CSvO\textsubscript{2} values in the SSS for more direct
@@ -1526,7 +1632,7 @@ regulate the level of CBF differently and independently of
 CMRO\textsubscript{2}, suggesting that these brain regions may be more
 susceptible to or protected from hypoxia. Indeed, evidence for
 physiological uncoupling of CBF and CMRO\textsubscript{2} has been
-reported previously\textsuperscript{33--35}. However, caution should be
+reported previously\textsuperscript{60--62}. However, caution should be
 exercised when drawing strong conclusions from our exploratory analysis.
 
 Invasive ventilation was not found to have to be associated with
@@ -1552,37 +1658,48 @@ relationship with cerebral oxygenation and include a healthy term
 control cohort to establish comparative baseline values.
 
 The difference between elevated CMRO\textsubscript{2} and CBF was also
-observed within regional tissues where CBF increased in all regional
-tissues for infants on non-invasive ventilation, but
-CMRO\textsubscript{2} only increased in the brainstem and cerebellar
-tissue. One possibility for this observation could be that compensatory
-mechanisms are activated in response to respiratory distress or regional
-brain injuries that hinder the uptake of oxygen. As with our findings in
-room air, this suggests that specific brain regions respond to
-respiratory support differently and may be more susceptible to damage.
-However, further research is first required to reproduce our exploratory
-findings.
+observed within specific tissues where CBF increased in all tissues for
+infants on non-invasive ventilation, but CMRO\textsubscript{2} only
+increased in the brainstem and cerebellar tissue. One possibility for
+this observation could be that compensatory mechanisms are activated in
+response to respiratory distress or regional brain injuries that hinder
+the uptake of oxygen. As with our findings in room air, this suggests
+that specific brain regions respond to respiratory support differently
+and may be more susceptible to damage. However, further research is
+first required to reproduce our exploratory findings.
 
 \subsection{Limitations}\label{limitations}
 
 There are several limitations that are worth highlighting. Our
 CSvO\textsubscript{2} processing pipeline filtered out \(\chi\) values
-below 0.15 ppm in order to obtain realistic values. Future studies may
-wish to use smaller voxel sizes, as well as a technique to decompose
-paramagnetic and diamagnetic values in order to avoid this
-step\textsuperscript{36}. See a recent study of ours for an attempt at
-this technique\textsuperscript{37}. Furthermore, in order to reduce QSM
-artifacts, the exterior of the brain mask was eroded, making it
-impossible to measure CSvO\textsubscript{2} in the SSS. Future studies
-may find a way to measure QSM in the SSS, which would also allow
+below 0.15 ppm in order to obtain realistic values. Furthermore, our SWI
+sequence was acquired at 1 x 1 x 2 mm\textsuperscript{2} but were
+reconstructed to 1 x 1 x 1 mm\textsuperscript{3} through zero-padded
+Fourier interpolation. This interpolation may introduce partial volume
+effects, particularly in small venous structures in neonates. Future
+studies should use smaller voxel sizes acquired isotropically, as well
+as a technique to decompose paramagnetic and diamagnetic values in order
+to avoid this step\textsuperscript{63}. See a recent study of ours for
+an attempt at this technique\textsuperscript{64}. Furthermore, in order
+to reduce QSM artifacts, the exterior of the brain mask was eroded,
+making it impossible to measure CSvO\textsubscript{2} in the SSS. Future
+studies may find a way to measure QSM in the SSS, which would also allow
 researchers to determine if CSvO\textsubscript{2} values are different
 in the SSS compared to the central cerebral veins. Again, see a recent
-study of ours that attempted this\textsuperscript{37}. Hct levels were
-not collected on the day of the scan, but instead were predicted based
-on past values. Our respiratory support analysis was exploratory with a
-small sample size. Thus, the positive correlation we found in Category 2
-may be spurious or a result of an unaccounted factor. Future studies
-using large sample randomized controlled trials would provide a clearer
+study of ours that attempted this\textsuperscript{64}.
+CSvO\textsubscript{2} values were not regional, but were averaged from
+the central cerebral veins. Future studies should look into ways of
+creating a fully-regional voxel-by-voxel CSvO\textsubscript{2} map. One
+source of inspiration could be Kudo et al.~(2015), who created OEF maps
+from QSM data by using a local threshold method with a
+volume-of-interest (VOI) of
+50 × 50 × 50 mm\textsuperscript{3}\textsuperscript{65}. However, this
+would result in a low resolution image. Hct levels were not collected on
+the day of the scan, but instead were predicted based on past values.
+Our respiratory support analysis was exploratory with a small sample
+size. Thus, the positive correlation we found in Category 2 may be
+spurious or a result of an unaccounted factor. Future studies using
+large sample randomized controlled trials would provide a clearer
 understanding of the relationship between respiratory support and
 cerebral oxygenation. Imaging was performed at term-equivalent age after
 the infants had been discharged from the NICU, meaning the scans were
@@ -1592,7 +1709,7 @@ support could provide a more robust mechanistic connection. Our study
 did not include a healthy control cohort to compare the expected
 physiological measures at TEA. This would be important to include, as
 too much oxygen can be just as harmful as not
-enough\textsuperscript{38}. Finally, due to our sample size, we were
+enough\textsuperscript{66}. Finally, due to our sample size, we were
 unable to explore supplementary variables, such as medications, that may
 affect respiratory uptake and oxygen metabolism, and patterns of oxygen
 saturations infants experience during their NICU stay. We see our study
@@ -1606,9 +1723,11 @@ We wish to acknowledge the work of and thank *** (Research Nurse); ***
 
 \section{Funding}\label{funding}
 
-Authors *** were co-primary investigators on a *** Catalyst Grant
-(\$20,000). *** were supported by an establishment award from *** .
-Scanning was partly funded through a special award to *** from *** .
+Authors AMW and REG were co-primary investigators on a BC Children's
+Hospital Research Institute (BCCHRI) - Brain, Behaviour and Development
+Catalyst Grant (\$20,000). AMW and CSZ were supported by an
+establishment award from BCCHRI. Scanning was partly funded through a
+special award to AMW from BCCHRI.
 
 \section{Data Availability}\label{data-availability}
 
@@ -1617,302 +1736,507 @@ manuscript, including statistics reported, figures, and tables, can be
 reproduced at
 \href{https://weberlab.github.io/CMRO2_Manuscript/}{weberlab.github.io/CMRO2\_Manuscript/}.
 
-The raw MRI data used in this paper is available by contacting the
-author.
+The data that support the findings of this study are available on
+request from the corresponding author. The data are not publicly
+available due to privacy or ethical restrictions.
 
 \section{References}\label{references}
 
 \phantomsection\label{refs}
-\begin{CSLReferences}{0}{0}
+\begin{CSLReferences}{0}{1}
 \bibitem[\citeproctext]{ref-kiechl-kohlendorferAdverseNeurodevelopmentalOutcome2009}
 \CSLLeftMargin{1. }%
-\CSLRightInline{Kiechl-Kohlendorfer, U., Ralser, E., Peglow, U. P.,
-Reiter, G. \& Trawöger, R.
-\href{https://doi.org/10.1111/j.1651-2227.2009.01219.x}{Adverse
-neurodevelopmental outcome in preterm infants: Risk factor profiles for
-different gestational ages}. \emph{Acta Paediatrica} \textbf{98},
-792--796 (2009).}
+\CSLRightInline{Kiechl-Kohlendorfer U, Ralser E, Peglow UP, Reiter G,
+Trawöger R. Adverse neurodevelopmental outcome in preterm infants: Risk
+factor profiles for different gestational ages. \emph{Acta Paediatrica}.
+2009;98(5):792-796.
+doi:\href{https://doi.org/10.1111/j.1651-2227.2009.01219.x}{10.1111/j.1651-2227.2009.01219.x}}
 
 \bibitem[\citeproctext]{ref-chungNeurodevelopmentalOutcomesPreterm2020}
 \CSLLeftMargin{2. }%
-\CSLRightInline{Chung, E. H., Chou, J. \& Brown, K. A.
-\href{https://doi.org/10.21037/tp.2019.09.10}{Neurodevelopmental
-outcomes of preterm infants: A recent literature review}.
-\emph{Translational Pediatrics} \textbf{9}, S3--S8 (2020).}
+\CSLRightInline{Chung EH, Chou J, Brown KA. Neurodevelopmental outcomes
+of preterm infants: A recent literature review. \emph{Translational
+Pediatrics}. 2020;9(S1):S3-S8.
+doi:\href{https://doi.org/10.21037/tp.2019.09.10}{10.21037/tp.2019.09.10}}
 
 \bibitem[\citeproctext]{ref-dhillonCerebralOxygenationMetabolism2022}
 \CSLLeftMargin{3. }%
-\CSLRightInline{Dhillon, S. K. \emph{et al.}
-\href{https://doi.org/10.3389/fped.2022.925951}{Cerebral {Oxygenation}
-and {Metabolism After Hypoxia-Ischemia}}. \emph{Frontiers in Pediatrics}
-\textbf{10}, 925951 (2022).}
+\CSLRightInline{Dhillon SK, Gunn ER, Lear BA, et al. Cerebral
+{Oxygenation} and {Metabolism After Hypoxia-Ischemia}. \emph{Frontiers
+in Pediatrics}. 2022;10:925951.
+doi:\href{https://doi.org/10.3389/fped.2022.925951}{10.3389/fped.2022.925951}}
 
 \bibitem[\citeproctext]{ref-mcphersonPreventionTreatmentRespiratory2018}
 \CSLLeftMargin{4. }%
-\CSLRightInline{McPherson, C. \& Wambach, J. A.
-\href{https://doi.org/10.1891/0730-0832.37.3.169}{Prevention and
-{Treatment} of {Respiratory Distress Syndrome} in {Preterm Neonates}}.
-\emph{Neonatal Network} \textbf{37}, 169--177 (2018).}
+\CSLRightInline{McPherson C, Wambach JA. Prevention and {Treatment} of
+{Respiratory Distress Syndrome} in {Preterm Neonates}. \emph{Neonatal
+Network}. 2018;37(3):169-177.
+doi:\href{https://doi.org/10.1891/0730-0832.37.3.169}{10.1891/0730-0832.37.3.169}}
 
 \bibitem[\citeproctext]{ref-yoderHighfrequencyVentilationNoninvasive2016}
 \CSLLeftMargin{5. }%
-\CSLRightInline{Yoder, B. A., Albertine, K. H. \& Null, D. M.
-\href{https://doi.org/10.1016/j.siny.2016.02.001}{High-frequency
-ventilation for non-invasive respiratory support of neonates}.
-\emph{Seminars in Fetal and Neonatal Medicine} \textbf{21}, 162--173
-(2016).}
+\CSLRightInline{Yoder BA, Albertine KH, Null DM. High-frequency
+ventilation for non-invasive respiratory support of neonates.
+\emph{Seminars in Fetal and Neonatal Medicine}. 2016;21(3):162-173.
+doi:\href{https://doi.org/10.1016/j.siny.2016.02.001}{10.1016/j.siny.2016.02.001}}
 
 \bibitem[\citeproctext]{ref-cannavoVentilationOxidativeStress2020}
 \CSLLeftMargin{6. }%
-\CSLRightInline{Cannavò, L., Rulli, I., Falsaperla, R., Corsello, G. \&
-Gitto, E. \href{https://doi.org/10.1186/s13052-020-00852-1}{Ventilation,
-oxidative stress and risk of brain injury in preterm newborn}.
-\emph{Italian Journal of Pediatrics} \textbf{46}, 100 (2020).}
+\CSLRightInline{Cannavò L, Rulli I, Falsaperla R, Corsello G, Gitto E.
+Ventilation, oxidative stress and risk of brain injury in preterm
+newborn. \emph{Italian Journal of Pediatrics}. 2020;46(1):100.
+doi:\href{https://doi.org/10.1186/s13052-020-00852-1}{10.1186/s13052-020-00852-1}}
 
 \bibitem[\citeproctext]{ref-guillotMechanicalVentilationDuration2020}
 \CSLLeftMargin{7. }%
-\CSLRightInline{Guillot, M. \emph{et al.}
-\href{https://doi.org/10.1016/j.jpeds.2020.05.039}{Mechanical
+\CSLRightInline{Guillot M, Guo T, Ufkes S, et al. Mechanical
 {Ventilation Duration}, {Brainstem Development}, and {Neurodevelopment}
-in {Children Born Preterm}: {A Prospective Cohort Study}}. \emph{The
-Journal of Pediatrics} \textbf{226}, 87--95.e3 (2020).}
+in {Children Born Preterm}: {A Prospective Cohort Study}. \emph{The
+Journal of Pediatrics}. 2020;226:87-95.e3.
+doi:\href{https://doi.org/10.1016/j.jpeds.2020.05.039}{10.1016/j.jpeds.2020.05.039}}
 
 \bibitem[\citeproctext]{ref-kalikkotthekkeveeduVentilationInducedLungInjury2022}
 \CSLLeftMargin{8. }%
-\CSLRightInline{Kalikkot Thekkeveedu, R., El-Saie, A., Prakash, V.,
-Katakam, L. \& Shivanna, B.
-\href{https://doi.org/10.3390/jcm11030557}{Ventilation-{Induced Lung
-Injury} ({VILI}) in {Neonates}: {Evidence-Based Concepts} and
-{Lung-Protective Strategies}}. \emph{Journal of Clinical Medicine}
-\textbf{11}, 557 (2022).}
+\CSLRightInline{Kalikkot Thekkeveedu R, El-Saie A, Prakash V, Katakam L,
+Shivanna B. Ventilation-{Induced Lung Injury} ({VILI}) in {Neonates}:
+{Evidence-Based Concepts} and {Lung-Protective Strategies}.
+\emph{Journal of Clinical Medicine}. 2022;11(3):557.
+doi:\href{https://doi.org/10.3390/jcm11030557}{10.3390/jcm11030557}}
 
 \bibitem[\citeproctext]{ref-hoContinuousPositiveAirway2020}
 \CSLLeftMargin{9. }%
-\CSLRightInline{Ho, J. J., Subramaniam, P. \& Davis, P. G.
-\href{https://doi.org/10.1002/14651858.CD002271.pub3}{Continuous
-positive airway pressure ({CPAP}) for respiratory distress in preterm
-infants}. \emph{Cochrane Database of Systematic Reviews} \textbf{2020},
-(2020).}
+\CSLRightInline{Ho JJ, Subramaniam P, Davis PG. Continuous positive
+airway pressure ({CPAP}) for respiratory distress in preterm infants.
+Cochrane Neonatal Group, ed. \emph{Cochrane Database of Systematic
+Reviews}. 2020;2020(10).
+doi:\href{https://doi.org/10.1002/14651858.CD002271.pub3}{10.1002/14651858.CD002271.pub3}}
 
 \bibitem[\citeproctext]{ref-ackermannHighfrequencyVentilationPreterm2023}
 \CSLLeftMargin{10. }%
-\CSLRightInline{Ackermann, B. W., Klotz, D., Hentschel, R., Thome, U. H.
-\& Van Kaam, A. H.
-\href{https://doi.org/10.1038/s41390-021-01639-8}{High-frequency
-ventilation in preterm infants and neonates}. \emph{Pediatric Research}
-\textbf{93}, 1810--1818 (2023).}
+\CSLRightInline{Ackermann BW, Klotz D, Hentschel R, Thome UH, Van Kaam
+AH. High-frequency ventilation in preterm infants and neonates.
+\emph{Pediatric Research}. 2023;93(7):1810-1818.
+doi:\href{https://doi.org/10.1038/s41390-021-01639-8}{10.1038/s41390-021-01639-8}}
 
 \bibitem[\citeproctext]{ref-shiProspectiveRandomizedControlled2014}
 \CSLLeftMargin{11. }%
-\CSLRightInline{Shi, Y., Tang, S., Zhao, J. \& Shen, J.
-\href{https://doi.org/10.1002/ppul.22883}{A prospective, randomized,
-controlled study of {NIPPV} versus {nCPAP} in preterm and term infants
-with respiratory distress syndrome: {NIPPV} vs. {nCPAP} in {Preterm} and
-{Term Infants}}. \emph{Pediatric Pulmonology} \textbf{49}, 673--678
-(2014).}
+\CSLRightInline{Shi Y, Tang S, Zhao J, Shen J. A prospective,
+randomized, controlled study of {NIPPV} versus {nCPAP} in preterm and
+term infants with respiratory distress syndrome: {NIPPV} vs. {nCPAP} in
+{Preterm} and {Term Infants}. \emph{Pediatric Pulmonology}.
+2014;49(7):673-678.
+doi:\href{https://doi.org/10.1002/ppul.22883}{10.1002/ppul.22883}}
 
 \bibitem[\citeproctext]{ref-dumpaNonInvasiveVentilatoryStrategies2021}
 \CSLLeftMargin{12. }%
-\CSLRightInline{Dumpa, V. \& Bhandari, V.
-\href{https://doi.org/10.3390/children8020132}{Non-{Invasive Ventilatory
+\CSLRightInline{Dumpa V, Bhandari V. Non-{Invasive Ventilatory
 Strategies} to {Decrease Bronchopulmonary Dysplasia}---{Where Are We} in
-2021?} \emph{Children} \textbf{8}, 132 (2021).}
+2021? \emph{Children}. 2021;8(2):132.
+doi:\href{https://doi.org/10.3390/children8020132}{10.3390/children8020132}}
 
 \bibitem[\citeproctext]{ref-brownMechanicalVentilationPremature2011}
 \CSLLeftMargin{13. }%
-\CSLRightInline{Brown, M. K. \& DiBlasi, R. M.
-\href{https://doi.org/10.4187/respcare.01429}{Mechanical {Ventilation}
-of the {Premature Neonate}}. \emph{Respiratory Care} \textbf{56},
-1298--1313 (2011).}
+\CSLRightInline{Brown MK, DiBlasi RM. Mechanical {Ventilation} of the
+{Premature Neonate}. \emph{Respiratory Care}. 2011;56(9):1298-1313.
+doi:\href{https://doi.org/10.4187/respcare.01429}{10.4187/respcare.01429}}
 
 \bibitem[\citeproctext]{ref-greenoughOptimalStrategiesNewborn2005}
 \CSLLeftMargin{14. }%
-\CSLRightInline{Greenough, A. \& Sharma, A.
-\href{https://doi.org/10.1016/j.earlhumdev.2005.10.002}{Optimal
-strategies for newborn ventilation---a synthesis of the evidence}.
-\emph{Early Human Development} \textbf{81}, 957--964 (2005).}
+\CSLRightInline{Greenough A, Sharma A. Optimal strategies for newborn
+ventilation---a synthesis of the evidence. \emph{Early Human
+Development}. 2005;81(12):957-964.
+doi:\href{https://doi.org/10.1016/j.earlhumdev.2005.10.002}{10.1016/j.earlhumdev.2005.10.002}}
 
 \bibitem[\citeproctext]{ref-ramaswamyEfficacyNoninvasiveRespiratory2020}
 \CSLLeftMargin{15. }%
-\CSLRightInline{Ramaswamy, V. V., More, K., Roehr, C. C., Bandiya, P. \&
-Nangia, S. \href{https://doi.org/10.1002/ppul.25011}{Efficacy of
-noninvasive respiratory support modes for primary respiratory support in
-preterm neonates with respiratory distress syndrome: {Systematic} review
-and network meta-analysis}. \emph{Pediatric Pulmonology} \textbf{55},
-2940--2963 (2020).}
+\CSLRightInline{Ramaswamy VV, More K, Roehr CC, Bandiya P, Nangia S.
+Efficacy of noninvasive respiratory support modes for primary
+respiratory support in preterm neonates with respiratory distress
+syndrome: {Systematic} review and network meta-analysis. \emph{Pediatric
+Pulmonology}. 2020;55(11):2940-2963.
+doi:\href{https://doi.org/10.1002/ppul.25011}{10.1002/ppul.25011}}
 
 \bibitem[\citeproctext]{ref-kollisch-singuleMechanicalVentilationPediatric2022}
 \CSLLeftMargin{16. }%
-\CSLRightInline{Kollisch-Singule, M. \emph{et al.}
-\href{https://doi.org/10.3389/fphys.2021.805620}{Mechanical
-{Ventilation} in {Pediatric} and {Neonatal Patients}}. \emph{Frontiers
-in Physiology} \textbf{12}, 805620 (2022).}
+\CSLRightInline{Kollisch-Singule M, Ramcharran H, Satalin J, et al.
+Mechanical {Ventilation} in {Pediatric} and {Neonatal Patients}.
+\emph{Frontiers in Physiology}. 2022;12:805620.
+doi:\href{https://doi.org/10.3389/fphys.2021.805620}{10.3389/fphys.2021.805620}}
 
 \bibitem[\citeproctext]{ref-luQuantitativeEvaluationOxygenation2008}
 \CSLLeftMargin{17. }%
-\CSLRightInline{Lu, H. \& Ge, Y.
-\href{https://doi.org/10.1002/mrm.21627}{Quantitative evaluation of
-oxygenation in venous vessels using {T2-Relaxation-Under-Spin-Tagging
-MRI}}. \emph{Magnetic Resonance in Medicine} \textbf{60}, 357--363
-(2008).}
+\CSLRightInline{Lu H, Ge Y. Quantitative evaluation of oxygenation in
+venous vessels using {T2-Relaxation-Under-Spin-Tagging MRI}.
+\emph{Magnetic Resonance in Medicine}. 2008;60(2):357-363.
+doi:\href{https://doi.org/10.1002/mrm.21627}{10.1002/mrm.21627}}
 
 \bibitem[\citeproctext]{ref-xuNoninvasiveQuantificationWholebrain2009}
 \CSLLeftMargin{18. }%
-\CSLRightInline{Xu, F., Ge, Y. \& Lu, H.
-\href{https://doi.org/10.1002/mrm.21994}{Noninvasive quantification of
-whole-brain cerebral metabolic rate of oxygen ({CMRO2}) by {MRI}}.
-\emph{Magnetic Resonance in Medicine} \textbf{62}, 141--148 (2009).}
+\CSLRightInline{Xu F, Ge Y, Lu H. Noninvasive quantification of
+whole-brain cerebral metabolic rate of oxygen ({CMRO2}) by {MRI}.
+\emph{Magnetic Resonance in Medicine}. 2009;62(1):141-148.
+doi:\href{https://doi.org/10.1002/mrm.21994}{10.1002/mrm.21994}}
 
 \bibitem[\citeproctext]{ref-liuQuantitativeAssessmentGlobal2014}
 \CSLLeftMargin{19. }%
-\CSLRightInline{Liu, P. \emph{et al.}
-\href{https://doi.org/10.1002/nbm.3067}{Quantitative assessment of
-global cerebral metabolic rate of oxygen ({CMRO2}) in neonates using
-{MRI}}. \emph{NMR in biomedicine} \textbf{27}, 332--340 (2014).}
+\CSLRightInline{Liu P, Huang H, Rollins N, et al. Quantitative
+assessment of global cerebral metabolic rate of oxygen ({CMRO2}) in
+neonates using {MRI}. \emph{NMR in biomedicine}. 2014;27(3):332-340.
+doi:\href{https://doi.org/10.1002/nbm.3067}{10.1002/nbm.3067}}
 
 \bibitem[\citeproctext]{ref-qiHemodynamicMetabolicAssessment2018}
 \CSLLeftMargin{20. }%
-\CSLRightInline{Qi, Y., Liu, P., Lin, Z., Lu, H. \& Wang, X.
-\href{https://doi.org/10.3389/fphys.2018.00233}{Hemodynamic and
+\CSLRightInline{Qi Y, Liu P, Lin Z, Lu H, Wang X. Hemodynamic and
 {Metabolic Assessment} of {Neonates With Punctate White Matter Lesions
 Using Phase-Contrast MRI} and {T2-Relaxation-Under-Spin-Tagging}
-({TRUST}) {MRI}}. \emph{Frontiers in Physiology} \textbf{9}, 233
-(2018).}
+({TRUST}) {MRI}. \emph{Frontiers in Physiology}. 2018;9:233.
+doi:\href{https://doi.org/10.3389/fphys.2018.00233}{10.3389/fphys.2018.00233}}
 
 \bibitem[\citeproctext]{ref-jainRapidMagneticResonance2011}
 \CSLLeftMargin{21. }%
-\CSLRightInline{Jain, V. \emph{et al.}
-\href{https://doi.org/10.1038/jcbfm.2011.34}{Rapid magnetic resonance
-measurement of global cerebral metabolic rate of oxygen consumption in
-humans during rest and hypercapnia}. \emph{Journal of Cerebral Blood
-Flow \& Metabolism} \textbf{31}, 1504--1512 (2011).}
+\CSLRightInline{Jain V, Langham MC, Floyd TF, Jain G, Magland JF, Wehrli
+FW. Rapid magnetic resonance measurement of global cerebral metabolic
+rate of oxygen consumption in humans during rest and hypercapnia.
+\emph{Journal of Cerebral Blood Flow \& Metabolism}.
+2011;31(7):1504-1512.
+doi:\href{https://doi.org/10.1038/jcbfm.2011.34}{10.1038/jcbfm.2011.34}}
 
 \bibitem[\citeproctext]{ref-jainCerebralOxygenMetabolism2014}
 \CSLLeftMargin{22. }%
-\CSLRightInline{Jain, V. \emph{et al.}
-\href{https://doi.org/10.1038/jcbfm.2013.214}{Cerebral oxygen metabolism
-in neonates with congenital heart disease quantified by {MRI} and
-optics}. \emph{Journal of Cerebral Blood Flow and Metabolism: Official
-Journal of the International Society of Cerebral Blood Flow and
-Metabolism} \textbf{34}, 380--388 (2014).}
+\CSLRightInline{Jain V, Buckley EM, Licht DJ, et al. Cerebral oxygen
+metabolism in neonates with congenital heart disease quantified by {MRI}
+and optics. \emph{Journal of Cerebral Blood Flow and Metabolism:
+Official Journal of the International Society of Cerebral Blood Flow and
+Metabolism}. 2014;34(3):380-388.
+doi:\href{https://doi.org/10.1038/jcbfm.2013.214}{10.1038/jcbfm.2013.214}}
 
 \bibitem[\citeproctext]{ref-petersenModelfreeArterialSpin2006}
 \CSLLeftMargin{23. }%
-\CSLRightInline{Petersen, E. T., Lim, T. \& Golay, X.
-\href{https://doi.org/10.1002/mrm.20784}{Model-free arterial spin
-labeling quantification approach for perfusion {MRI}}. \emph{Magnetic
-Resonance in Medicine} \textbf{55}, 219--232 (2006).}
+\CSLRightInline{Petersen ET, Lim T, Golay X. Model-free arterial spin
+labeling quantification approach for perfusion {MRI}. \emph{Magnetic
+Resonance in Medicine}. 2006;55(2):219-232.
+doi:\href{https://doi.org/10.1002/mrm.20784}{10.1002/mrm.20784}}
 
 \bibitem[\citeproctext]{ref-luCalibrationValidationTRUST2012}
 \CSLLeftMargin{24. }%
-\CSLRightInline{Lu, H. \emph{et al.}
-\href{https://doi.org/10.1002/mrm.22970}{Calibration and validation of
-{TRUST MRI} for the estimation of cerebral blood oxygenation}.
-\emph{Magnetic Resonance in Medicine} \textbf{67}, 42--49 (2012).}
+\CSLRightInline{Lu H, Xu F, Grgac K, Liu P, Qin Q, van Zijl P.
+Calibration and validation of {TRUST MRI} for the estimation of cerebral
+blood oxygenation. \emph{Magnetic Resonance in Medicine}.
+2012;67(1):42-49.
+doi:\href{https://doi.org/10.1002/mrm.22970}{10.1002/mrm.22970}}
 
 \bibitem[\citeproctext]{ref-altmanCerebralOxygenMetabolism1993}
 \CSLLeftMargin{25. }%
-\CSLRightInline{Altman, D. I., Perlman, J. M., Volpe, J. J. \& Powers,
-W. J. \href{https://www.ncbi.nlm.nih.gov/pubmed/8516092}{Cerebral oxygen
-metabolism in newborns}. \emph{Pediatrics} \textbf{92}, 99--104 (1993).}
+\CSLRightInline{Altman DI, Perlman JM, Volpe JJ, Powers WJ.
+\href{https://www.ncbi.nlm.nih.gov/pubmed/8516092}{Cerebral oxygen
+metabolism in newborns}. \emph{Pediatrics}. 1993;92(1):99-104.}
 
 \bibitem[\citeproctext]{ref-devisNoninvasiveMRIMeasurements2014}
 \CSLLeftMargin{26. }%
-\CSLRightInline{De Vis, J. B. \emph{et al.}
-\href{https://doi.org/10.1016/j.neuroimage.2014.03.060}{Non-invasive
-{MRI} measurements of venous oxygenation, oxygen extraction fraction and
-oxygen consumption in neonates}. \emph{NeuroImage} \textbf{95}, 185--192
-(2014).}
+\CSLRightInline{De Vis JB, Petersen ET, Alderliesten T, et al.
+Non-invasive {MRI} measurements of venous oxygenation, oxygen extraction
+fraction and oxygen consumption in neonates. \emph{NeuroImage}.
+2014;95:185-192.
+doi:\href{https://doi.org/10.1016/j.neuroimage.2014.03.060}{10.1016/j.neuroimage.2014.03.060}}
 
 \bibitem[\citeproctext]{ref-elwellMeasurementCMRO2Neonates2005}
 \CSLLeftMargin{27. }%
-\CSLRightInline{Elwell, C. E. \emph{et al.}
-\href{https://doi.org/10.1007/0-387-26206-7_35}{Measurement of {CMRO2}
-in {Neonates Undergoing Intensive Care Using Near Infrared
-Spectroscopy}}. in \emph{Oxygen {Transport} to {Tissue XXVI}} (eds.
-Okunieff, P., Williams, J. \& Chen, Y.) vol. 566 263--268
-(Springer-Verlag, New York, 2005).}
+\CSLRightInline{Elwell CE, Henty JR, Leung TS, et al. Measurement of
+{CMRO2} in {Neonates Undergoing Intensive Care Using Near Infrared
+Spectroscopy}. In: Okunieff P, Williams J, Chen Y, eds. \emph{Oxygen
+{Transport} to {Tissue XXVI}}. Vol 566. Springer-Verlag; 2005:263-268.
+doi:\href{https://doi.org/10.1007/0-387-26206-7_35}{10.1007/0-387-26206-7\_35}}
 
 \bibitem[\citeproctext]{ref-skovEstimationCerebralVenous1993}
 \CSLLeftMargin{28. }%
-\CSLRightInline{Skov, L., Pryds, O., Greisen, G. \& Lou, H.
-\href{https://doi.org/10.1203/00006450-199301000-00011}{Estimation of
+\CSLRightInline{Skov L, Pryds O, Greisen G, Lou H. Estimation of
 cerebral venous saturation in newborn infants by near infrared
-spectroscopy}. \emph{Pediatric Research} \textbf{33}, 52--55 (1993).}
+spectroscopy. \emph{Pediatric Research}. 1993;33(1):52-55.
+doi:\href{https://doi.org/10.1203/00006450-199301000-00011}{10.1203/00006450-199301000-00011}}
 
 \bibitem[\citeproctext]{ref-yoxallMeasurementCerebralOxygen1998}
 \CSLLeftMargin{29. }%
-\CSLRightInline{Yoxall, C. W. \& Weindling, A. M.
-\href{https://doi.org/10.1203/00006450-199809000-00004}{Measurement of
-cerebral oxygen consumption in the human neonate using near infrared
-spectroscopy: Cerebral oxygen consumption increases with advancing
-gestational age}. \emph{Pediatric Research} \textbf{44}, 283--290
-(1998).}
+\CSLRightInline{Yoxall CW, Weindling AM. Measurement of cerebral oxygen
+consumption in the human neonate using near infrared spectroscopy:
+Cerebral oxygen consumption increases with advancing gestational age.
+\emph{Pediatric Research}. 1998;44(3):283-290.
+doi:\href{https://doi.org/10.1203/00006450-199809000-00004}{10.1203/00006450-199809000-00004}}
+
+\bibitem[\citeproctext]{ref-woolrichBayesianAnalysisNeuroimaging2009}
+\CSLLeftMargin{30. }%
+\CSLRightInline{Woolrich MW, Jbabdi S, Patenaude B, et al. Bayesian
+analysis of neuroimaging data in {FSL}. \emph{NeuroImage}.
+2009;45(1):S173-S186.
+doi:\href{https://doi.org/10.1016/j.neuroimage.2008.10.055}{10.1016/j.neuroimage.2008.10.055}}
+
+\bibitem[\citeproctext]{ref-boreDcm2Bids2023}
+\CSLLeftMargin{31. }%
+\CSLRightInline{Boré A, Guay S, Bedetti C, Meisler S, GuenTher N.
+{Dcm2Bids}. Published online October 2023.
+doi:\href{https://doi.org/10.5281/ZENODO.8436509}{10.5281/ZENODO.8436509}}
+
+\bibitem[\citeproctext]{ref-liFirstStepNeuroimaging2016}
+\CSLLeftMargin{32. }%
+\CSLRightInline{Li X, Morgan PS, Ashburner J, Smith J, Rorden C. The
+first step for neuroimaging data analysis: {DICOM} to {NIfTI}
+conversion. \emph{Journal of Neuroscience Methods}. 2016;264:47-56.
+doi:\href{https://doi.org/10.1016/j.jneumeth.2016.03.001}{10.1016/j.jneumeth.2016.03.001}}
+
+\bibitem[\citeproctext]{ref-gorgolewskiBrainImagingData2016}
+\CSLLeftMargin{33. }%
+\CSLRightInline{Gorgolewski KJ, Auer T, Calhoun VD, et al. The brain
+imaging data structure, a format for organizing and describing outputs
+of neuroimaging experiments. \emph{Scientific Data}. 2016;3(1):160044.
+doi:\href{https://doi.org/10.1038/sdata.2016.44}{10.1038/sdata.2016.44}}
+
+\bibitem[\citeproctext]{ref-makropoulosDevelopingHumanConnectome2018}
+\CSLLeftMargin{34. }%
+\CSLRightInline{Makropoulos A, Robinson EC, Schuh A, et al. The
+developing human connectome project: {A} minimal processing pipeline for
+neonatal cortical surface reconstruction. \emph{NeuroImage}.
+2018;173:88-112.
+doi:\href{https://doi.org/10.1016/j.neuroimage.2018.01.054}{10.1016/j.neuroimage.2018.01.054}}
+
+\bibitem[\citeproctext]{ref-smithFastRobustAutomated2002}
+\CSLLeftMargin{35. }%
+\CSLRightInline{Smith SM. Fast robust automated brain extraction.
+\emph{Human Brain Mapping}. 2002;17(3):143-155.
+doi:\href{https://doi.org/10.1002/hbm.10062}{10.1002/hbm.10062}}
+
+\bibitem[\citeproctext]{ref-makropoulosAutomaticWholeBrain2014}
+\CSLLeftMargin{36. }%
+\CSLRightInline{Makropoulos A, Gousias IS, Ledig C, et al. Automatic
+{Whole Brain MRI Segmentation} of the {Developing Neonatal Brain}.
+\emph{IEEE Transactions on Medical Imaging}. 2014;33(9):1818-1831.
+doi:\href{https://doi.org/10.1109/TMI.2014.2322280}{10.1109/TMI.2014.2322280}}
+
+\bibitem[\citeproctext]{ref-kamesRapidTwostepDipole2018}
+\CSLLeftMargin{37. }%
+\CSLRightInline{Kames C, Wiggermann V, Rauscher A. Rapid two-step dipole
+inversion for susceptibility mapping with sparsity priors.
+\emph{NeuroImage}. 2018;167:276-283.
+doi:\href{https://doi.org/10.1016/j.neuroimage.2017.11.018}{10.1016/j.neuroimage.2017.11.018}}
+
+\bibitem[\citeproctext]{ref-qsmconsensusorganizationcommitteeRecommendedImplementationQuantitative2024}
+\CSLLeftMargin{38. }%
+\CSLRightInline{QSM Consensus Organization Committee, Bilgic B, Costagli
+M, et al. Recommended implementation of quantitative susceptibility
+mapping for clinical research in the brain: {A} consensus of the
+{\textsc{ISMRM}} electro-magnetic tissue properties study group.
+\emph{Magnetic Resonance in Medicine}. 2024;91(5):1834-1862.
+doi:\href{https://doi.org/10.1002/mrm.30006}{10.1002/mrm.30006}}
+
+\bibitem[\citeproctext]{ref-kamesGitHubKamesyQSMm2024}
+\CSLLeftMargin{39. }%
+\CSLRightInline{Kames C. {GitHub} - kamesy/{QSM}.m: {MATLAB} toolbox for
+{Quantitative Susceptibility Mapping}. Published online March 2024.}
+
+\bibitem[\citeproctext]{ref-straubNovelGradientEcho2022}
+\CSLLeftMargin{40. }%
+\CSLRightInline{Straub S, Stiegeler J, El-Sanosy E, Bendszus M, Ladd ME,
+Schneider TM. A novel gradient echo data based vein segmentation
+algorithm and its application for the detection of regional cerebral
+differences in venous susceptibility. \emph{NeuroImage}.
+2022;250:118931.
+doi:\href{https://doi.org/10.1016/j.neuroimage.2022.118931}{10.1016/j.neuroimage.2022.118931}}
+
+\bibitem[\citeproctext]{ref-yaghmaieQSMARTQuantitativeSusceptibility2021}
+\CSLLeftMargin{41. }%
+\CSLRightInline{Yaghmaie N, Syeda WT, Wu C, et al. {QSMART}:
+{Quantitative} susceptibility mapping artifact reduction technique.
+\emph{NeuroImage}. 2021;231:117701.
+doi:\href{https://doi.org/10.1016/j.neuroimage.2020.117701}{10.1016/j.neuroimage.2020.117701}}
+
+\bibitem[\citeproctext]{ref-sunExtractingMoreLess2020}
+\CSLLeftMargin{42. }%
+\CSLRightInline{Sun H, Cleary JO, Glarin R, et al. Extracting more for
+less: Multi-echo {MP2RAGE} for simultaneous {T} {\textsubscript{1}}
+-weighted imaging, {T} {\textsubscript{1}} mapping, mapping, {SWI}, and
+{QSM} from a single acquisition. \emph{Magnetic Resonance in Medicine}.
+2020;83(4):1178-1191.
+doi:\href{https://doi.org/10.1002/mrm.27975}{10.1002/mrm.27975}}
+
+\bibitem[\citeproctext]{ref-dirk-jankroonHessianBasedFrangi2020}
+\CSLLeftMargin{43. }%
+\CSLRightInline{Dirk-Jan Kroon. Hessian based {Frangi Vesselness}
+filter. Published online 2020.}
+
+\bibitem[\citeproctext]{ref-alirezadastanGaussianMeanCurvatures2020}
+\CSLLeftMargin{44. }%
+\CSLRightInline{Alireza Dastan. Gaussian and mean curvatures calculation
+on a triangulated 3d surface. Published online 2020.}
+
+\bibitem[\citeproctext]{ref-weiliandbingwuandchunleiliu3265STISuite2014}
+\CSLLeftMargin{45. }%
+\CSLRightInline{Wei Li and Bing Wu and Chunlei Liu. 3265 {STI Suite} : A
+{Software Package} for {Quantitative Susceptibility Imaging}. In:
+\emph{{ISMRM}}.; 2014.}
+
+\bibitem[\citeproctext]{ref-biondettiInvestigatingOxygenationBrain2019}
+\CSLLeftMargin{46. }%
+\CSLRightInline{Biondetti E, Rojas-Villabona A, Sokolska M, et al.
+Investigating the oxygenation of brain arteriovenous malformations using
+quantitative susceptibility mapping. \emph{NeuroImage}.
+2019;199:440-453.
+doi:\href{https://doi.org/10.1016/j.neuroimage.2019.05.014}{10.1016/j.neuroimage.2019.05.014}}
+
+\bibitem[\citeproctext]{ref-somanSusceptibilityBasedNeuroimagingStandard2017}
+\CSLLeftMargin{47. }%
+\CSLRightInline{Soman S, Bregni JA, Bilgic B, et al.
+Susceptibility-{Based Neuroimaging}: {Standard Methods}, {Clinical
+Applications}, and {Future Directions}. \emph{Current Radiology
+Reports}. 2017;5(3):11.
+doi:\href{https://doi.org/10.1007/s40134-017-0204-1}{10.1007/s40134-017-0204-1}}
+
+\bibitem[\citeproctext]{ref-fanQuantitativeOxygenationVenography2014}
+\CSLLeftMargin{48. }%
+\CSLRightInline{Fan AP, Bilgic B, Gagnon L, et al. Quantitative
+oxygenation venography from {MRI} phase. \emph{Magnetic Resonance in
+Medicine}. 2014;72(1):149-159.
+doi:\href{https://doi.org/10.1002/mrm.24918}{10.1002/mrm.24918}}
+
+\bibitem[\citeproctext]{ref-weisskoffMRISusceptometryImagebased1992}
+\CSLLeftMargin{49. }%
+\CSLRightInline{Weisskoff RM, Kiihne S. {MRI} susceptometry:
+{Image-based} measurement of absolute susceptibility of {MR} contrast
+agents and human blood: {COMMUNICATIONS}. \emph{Magnetic Resonance in
+Medicine}. 1992;24(2):375-383.
+doi:\href{https://doi.org/10.1002/mrm.1910240219}{10.1002/mrm.1910240219}}
+
+\bibitem[\citeproctext]{ref-sedlacikObtainingBloodOxygenation2007}
+\CSLLeftMargin{50. }%
+\CSLRightInline{Sedlacik J, Rauscher A, Reichenbach JR. Obtaining blood
+oxygenation levels from {MR} signal behavior in the presence of single
+venous vessels. \emph{Magnetic Resonance in Medicine}.
+2007;58(5):1035-1044.
+doi:\href{https://doi.org/10.1002/mrm.21283}{10.1002/mrm.21283}}
+
+\bibitem[\citeproctext]{ref-portnoyHumanUmbilicalCord2018}
+\CSLLeftMargin{51. }%
+\CSLRightInline{Portnoy S, Milligan N, Seed M, Sled JG, Macgowan CK.
+Human umbilical cord blood relaxation times and susceptibility at 3 {T}:
+{Human Umbilical Cord Blood Relaxation Times} and {Susceptibility} at 3
+{T}. \emph{Magnetic Resonance in Medicine}. 2018;79(6):3194-3206.
+doi:\href{https://doi.org/10.1002/mrm.26978}{10.1002/mrm.26978}}
+
+\bibitem[\citeproctext]{ref-alsopRecommendedImplementationArterial2015}
+\CSLLeftMargin{52. }%
+\CSLRightInline{Alsop DC, Detre JA, Golay X, et al. Recommended
+implementation of arterial spin-labeled perfusion {MRI} for clinical
+applications: {A} consensus of the {ISMRM} perfusion study group and the
+{European} consortium for {ASL} in dementia: {Recommended
+Implementation} of {ASL} for {Clinical Applications}. \emph{Magnetic
+Resonance in Medicine}. 2015;73(1):102-116.
+doi:\href{https://doi.org/10.1002/mrm.25197}{10.1002/mrm.25197}}
+
+\bibitem[\citeproctext]{ref-devisImpactNeonateHaematocrit2014}
+\CSLLeftMargin{53. }%
+\CSLRightInline{De Vis JB, Hendrikse J, Groenendaal F, et al. Impact of
+neonate haematocrit variability on the longitudinal relaxation time of
+blood: {Implications} for arterial spin labelling {MRI}.
+\emph{NeuroImage: Clinical}. 2014;4:517-525.
+doi:\href{https://doi.org/10.1016/j.nicl.2014.03.006}{10.1016/j.nicl.2014.03.006}}
+
+\bibitem[\citeproctext]{ref-ulatowskiVivoDeterminationAbsolute1999}
+\CSLLeftMargin{54. }%
+\CSLRightInline{Ulatowski JA, Oja JME, Suarez JI, Kauppinen RA,
+Traystman RJ, Van Zijl PCM. {\emph{In} }{\emph{Vivo}} {Determination} of
+{Absolute Cerebral Blood Volume Using Hemoglobin} as a {Natural Contrast
+Agent}: {An MRI Study Using Altered Arterial Carbon Dioxide Tension}.
+\emph{Journal of Cerebral Blood Flow \& Metabolism}. 1999;19(7):809-817.
+doi:\href{https://doi.org/10.1097/00004647-199907000-00012}{10.1097/00004647-199907000-00012}}
+
+\bibitem[\citeproctext]{ref-chongCerebralMetabolicRate2015}
+\CSLLeftMargin{55. }%
+\CSLRightInline{Chong SP, Merkle CW, Leahy C, Srinivasan VJ. Cerebral
+metabolic rate of oxygen ({CMRO}\_2) assessed by combined {Doppler} and
+spectroscopic {OCT}. \emph{Biomedical Optics Express}. 2015;6(10):3941.
+doi:\href{https://doi.org/10.1364/BOE.6.003941}{10.1364/BOE.6.003941}}
 
 \bibitem[\citeproctext]{ref-rcoreteamLanguageEnvironmentStatistical2022}
-\CSLLeftMargin{30. }%
+\CSLLeftMargin{56. }%
 \CSLRightInline{R Core Team. R: {A Language} and {Environment} for
-{Statistical Computing}. (2022).}
+{Statistical Computing}. Published online 2022.}
 
 \bibitem[\citeproctext]{ref-rstudioteamRStudioIntegratedDevelopment}
-\CSLLeftMargin{31. }%
+\CSLLeftMargin{57. }%
 \CSLRightInline{RStudio Team. {RStudio}: {Integrated Development
 Environment} for {R}.}
 
 \bibitem[\citeproctext]{ref-liuAssessmentCerebralBlood2019}
-\CSLLeftMargin{32. }%
-\CSLRightInline{Liu, P. \emph{et al.}
-\href{https://doi.org/10.1016/j.neuroimage.2018.03.020}{Assessment of
+\CSLLeftMargin{58. }%
+\CSLRightInline{Liu P, Qi Y, Lin Z, Guo Q, Wang X, Lu H. Assessment of
 cerebral blood flow in neonates and infants: {A} phase-contrast {MRI}
-study}. \emph{NeuroImage} \textbf{185}, 926--933 (2019).}
+study. \emph{NeuroImage}. 2019;185:926-933.
+doi:\href{https://doi.org/10.1016/j.neuroimage.2018.03.020}{10.1016/j.neuroimage.2018.03.020}}
+
+\bibitem[\citeproctext]{ref-choCerebralMetabolicRate2018}
+\CSLLeftMargin{59. }%
+\CSLRightInline{Cho J, Kee Y, Spincemaille P, et al. Cerebral metabolic
+rate of oxygen ({CMRO}{\textsubscript{2}} ) mapping by combining
+quantitative susceptibility mapping ({QSM}) and quantitative blood
+oxygenation level-dependent imaging ({qBOLD}). \emph{Magnetic Resonance
+in Medicine}. 2018;80(4):1595-1604.
+doi:\href{https://doi.org/10.1002/mrm.27135}{10.1002/mrm.27135}}
 
 \bibitem[\citeproctext]{ref-foxFocalPhysiologicalUncoupling1986}
-\CSLLeftMargin{33. }%
-\CSLRightInline{Fox, P. T. \& Raichle, M. E.
-\href{https://doi.org/10.1073/pnas.83.4.1140}{Focal physiological
-uncoupling of cerebral blood flow and oxidative metabolism during
-somatosensory stimulation in human subjects.} \emph{Proceedings of the
-National Academy of Sciences} \textbf{83}, 1140--1144 (1986).}
+\CSLLeftMargin{60. }%
+\CSLRightInline{Fox PT, Raichle ME. Focal physiological uncoupling of
+cerebral blood flow and oxidative metabolism during somatosensory
+stimulation in human subjects. \emph{Proceedings of the National Academy
+of Sciences}. 1986;83(4):1140-1144.
+doi:\href{https://doi.org/10.1073/pnas.83.4.1140}{10.1073/pnas.83.4.1140}}
 
 \bibitem[\citeproctext]{ref-henriksenRegionalInterindividualRelationships2021}
-\CSLLeftMargin{34. }%
-\CSLRightInline{Henriksen, O. M. \emph{et al.}
-\href{https://doi.org/10.1152/japplphysiol.00939.2020}{Regional and
-interindividual relationships between cerebral perfusion and oxygen
-metabolism}. \emph{Journal of Applied Physiology} \textbf{130},
-1836--1847 (2021).}
+\CSLLeftMargin{61. }%
+\CSLRightInline{Henriksen OM, Gjedde A, Vang K, Law I, Aanerud J,
+Rostrup E. Regional and interindividual relationships between cerebral
+perfusion and oxygen metabolism. \emph{Journal of Applied Physiology}.
+2021;130(6):1836-1847.
+doi:\href{https://doi.org/10.1152/japplphysiol.00939.2020}{10.1152/japplphysiol.00939.2020}}
 
 \bibitem[\citeproctext]{ref-ishiiRegionalDifferenceCerebral1996}
-\CSLLeftMargin{35. }%
-\CSLRightInline{Ishii, K. \emph{et al.}
-\href{https://www.ncbi.nlm.nih.gov/pubmed/8965174}{Regional difference
-in cerebral blood flow and oxidative metabolism in human cortex}.
-\emph{Journal of Nuclear Medicine: Official Publication, Society of
-Nuclear Medicine} \textbf{37}, 1086--1088 (1996).}
+\CSLLeftMargin{62. }%
+\CSLRightInline{Ishii K, Sasaki M, Kitagaki H, Sakamoto S, Yamaji S,
+Maeda K. \href{https://www.ncbi.nlm.nih.gov/pubmed/8965174}{Regional
+difference in cerebral blood flow and oxidative metabolism in human
+cortex}. \emph{Journal of Nuclear Medicine: Official Publication,
+Society of Nuclear Medicine}. 1996;37(7):1086-1088.}
 
 \bibitem[\citeproctext]{ref-shinHseparationMagneticSusceptibility2021}
-\CSLLeftMargin{36. }%
-\CSLRightInline{Shin, H.-G. \emph{et al.}
-\href{https://doi.org/10.1016/j.neuroimage.2021.118371}{{\(\chi\)}-separation:
+\CSLLeftMargin{63. }%
+\CSLRightInline{Shin HG, Lee J, Yun YH, et al. {\(\chi\)}-separation:
 {Magnetic} susceptibility source separation toward iron and myelin
-mapping in the brain}. \emph{NeuroImage} \textbf{240}, 118371 (2021).}
+mapping in the brain. \emph{NeuroImage}. 2021;240:118371.
+doi:\href{https://doi.org/10.1016/j.neuroimage.2021.118371}{10.1016/j.neuroimage.2021.118371}}
 
 \bibitem[\citeproctext]{ref-carmichael-etal-magnetic}
-\CSLLeftMargin{37. }%
-\CSLRightInline{Carmichael, T. G., Rauscher, A., Grunau, R. E. \& Weber,
-A. M. The application of magnetic susceptibility separation for
-measuring cerebral oxygenation in preterm neonates. \emph{Pediatric
-Research} (2025)
-doi:\href{https://doi.org/10.1038/s41390-025-03966-6}{10.1038/s41390-025-03966-6}.}
+\CSLLeftMargin{64. }%
+\CSLRightInline{Carmichael TG, Rauscher A, Grunau RE, Weber AM. The
+application of magnetic susceptibility separation for measuring cerebral
+oxygenation in preterm neonates. \emph{Pediatric Research}. Published
+online March 2025.
+doi:\href{https://doi.org/10.1038/s41390-025-03966-6}{10.1038/s41390-025-03966-6}}
+
+\bibitem[\citeproctext]{ref-kudoOxygenExtractionFraction2016}
+\CSLLeftMargin{65. }%
+\CSLRightInline{Kudo K, Liu T, Murakami T, et al. Oxygen extraction
+fraction measurement using quantitative susceptibility mapping:
+{Comparison} with positron emission tomography. \emph{Journal of
+Cerebral Blood Flow \& Metabolism}. 2016;36(8):1424-1433.
+doi:\href{https://doi.org/10.1177/0271678X15606713}{10.1177/0271678X15606713}}
 
 \bibitem[\citeproctext]{ref-rantakariEarlyOxygenLevels2021}
-\CSLLeftMargin{38. }%
-\CSLRightInline{Rantakari, K. \emph{et al.}
-\href{https://doi.org/10.1038/s41390-021-01460-3}{Early oxygen levels
-contribute to brain injury in extremely preterm infants}.
-\emph{Pediatric Research} \textbf{90}, 131--139 (2021).}
+\CSLLeftMargin{66. }%
+\CSLRightInline{Rantakari K, Rinta-Koski OP, Metsäranta M, et al. Early
+oxygen levels contribute to brain injury in extremely preterm infants.
+\emph{Pediatric Research}. 2021;90(1):131-139.
+doi:\href{https://doi.org/10.1038/s41390-021-01460-3}{10.1038/s41390-021-01460-3}}
 
 \end{CSLReferences}
+
+\phantomsection\label{3ade8a4a-fb1d-4a6c-8409-ac45482d5fc9}
+
 
 
 
