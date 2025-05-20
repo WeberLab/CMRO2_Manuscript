@@ -85,6 +85,9 @@ citation:
   type: article-journal
   container-title: NMR in Biomedicine
   issued: May 2025
+  volume: 38
+  issue: 6
+  page: e70065
   doi: 10.1002/nbm.70065
   url: https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/full/10.1002/nbm.70065
 ---
