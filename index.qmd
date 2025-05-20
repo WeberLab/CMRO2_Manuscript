@@ -80,6 +80,13 @@ crossref:
   fig-title: '**Figure**'
   tbl-title: '**Table**'
   title-delim: "**.**"
+
+citation:
+  type: article-journal
+  container-title: NMR in Biomedicine
+  issued: May 2025
+  doi: 10.1002/nbm.70065
+  url: https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/full/10.1002/nbm.70065
 ---
 
 ```{r libraries}
@@ -143,7 +150,7 @@ This study presents a novel multi-modal MRI approach to measure cerebral blood f
 
 **METHODS:** Infants (n = 19) born < 32 weeks gestational age were recruited in the neonatal intensive care unit. Infants were scanned at term-equivalent age using a 3T MRI sequence comprising of T~1~-weighted, T~2~-weighted, arterial spin labeling (ASL), and SWI. Days on three different categories of respiratory support, based on levels of invasiveness, were recorded. Using multiple linear regression, CBF and CMRO~2~ were analyzed against days on: respiratory support, days in room air, and the proportion of days on respiratory support; GA and PMA were used as confounding factors.
 
-**RESULTS:** Average CBF and CMRO~2~ of cortical grey matter was `r round(allstats["GM_CBF","mean"],2)` ± `r round(allstats["GM_CBF","sd"],2)` mL / 100 g / min and `r round(allstats["GM_CMRO2","mean"],2)` ± `r round(allstats["GM_CMRO2","mean"],2)` µmol / 100 g / min, respectively. CMRO~2~ and CBF were positively correlated with days on non-invasive respiratory support, and negatively correlated with days in room air.
+**RESULTS:** Average CBF and CMRO~2~ of cortical grey matter was `r round(allstats["GM_CBF","mean"],2)` ± `r round(allstats["GM_CBF","sd"],2)` mL / 100 g / min and `r round(allstats["GM_CMRO2","mean"],2)` ± `r round(allstats["GM_CMRO2","sd"],2)` µmol / 100 g / min, respectively. CMRO~2~ and CBF were positively correlated with days on non-invasive respiratory support, and negatively correlated with days in room air.
 
 **CONCLUSION:** Using our novel method, CBF and CMRO~2~ values aligned closely with literature values. Our exploratory findings suggest that the type of respiratory support may influence cerebral oxygenation during the neonatal period in infants born very preterm, with greater oxygen delivery and consumption associated with non-invasive respiratory support. Our semi-regional brain analysis further highlights that different brain structures are impacted in distinct ways.
 
