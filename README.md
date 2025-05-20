@@ -1,4 +1,4 @@
-## Quarto Manuscript for "Assessing Semi-Regional Cerebral Oxygen Consumption (CMRO~2~) in Preterm Neonates: A Quantitative MRI Cohort Study with Exploratory Analysis of Respiratory Support"
+## Quarto Manuscript for "Assessing Semi-Regional Cerebral Oxygen Consumption (CMRO<sub>2</sub>) in Preterm Neonates: A Quantitative MRI Cohort Study with Exploratory Analysis of Respiratory Support"
 
 This is a repo for generating our manuscript published in _NMR in Biomedicine_ (2025), [doi:10.1002/nbm.70065](https://doi.org/10.1002/nbm.70065)
 
